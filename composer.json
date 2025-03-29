@@ -1,0 +1,30 @@
+{
+    "name": "corebranch/blugen",
+    "description": "Code generator based on ATProto lexicons.",
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.1",
+        "symfony/console": "^6.4.20",
+	    "symfony/validator": "^6.4.20",
+        "nette/php-generator": "^4.1.7"
+    },
+    "require-dev": {
+	    "phpunit/phpunit": "^10.5.45",
+        "phpstan/phpstan": "^2.1.11"
+    },
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "Blugen\\": "src/",
+            "Blugen\\Lexicons\\": "lexicons/",
+            "Blugen\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Eldar Shahmaliyev",
+            "email": "shahmal1yevv@proton.me"
+        }
+    ]
+}
