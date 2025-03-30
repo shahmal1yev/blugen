@@ -14,11 +14,18 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-#[AsCommand('lexicons:generate')]
+#[AsCommand(
+    'lexicons:generate',
+    "Generate based on ATProto lexicons."
+)]
 class Generate extends Command
 {
     private readonly ClassLoader $classLoader;
     private readonly Filesystem $filesystem;
+    private const ERROR_PATH_NOT_EXIST     = "The path '%s' does not exist.";
+    private const ERROR_PATH_NOT_READABLE  = "The path '%s' is not readable.";
+    private const ERROR_INVALID_PREFIX     = "Prefix '%s' is not registered in PSR-4 autoload.";
+    private const ERROR_INVALID_CLASSNAME  = "is not valid class name.";
 
     public function __construct()
     {
@@ -30,46 +37,41 @@ class Generate extends Command
 
     protected function configure(): void
     {
-        $this->addArgument(
-            'source',
-            InputArgument::REQUIRED
-        );
+        $this->addArgument('source', InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $source = $this->source($input);
-        $paths = $this->flat($source);
-        $validated = $this->validated($paths);
+        $paths = $this->validated(
+            $this->flat($this->source($input))
+        );
 
-        foreach ($validated as $file) {
-            $lexicon = new Lexicon(json_decode(file_get_contents($file), true));
+        foreach ($paths as $filePath) {
+            $lexicon = new Lexicon(json_decode(file_get_contents($filePath), true));
 
             $prefix = "Blugen\\Lexicons\\";
-            $classes = $this->classNamespaces($lexicon, $prefix);
-
-            foreach($classes as $class) {
-                $path = $this->classPath($class, $prefix);
-                $namespaceParts = explode("\\", $class);
-
-                $className = array_pop($namespaceParts);
-                $namespaceString = implode("\\", $namespaceParts);
-
+            foreach ($this->classNamespaces($lexicon, $prefix) as $classFqcn) {
                 $file = new PhpFile();
+                $file->setStrictTypes();
 
-                $namespace = $file->addNamespace($namespaceString);
+                $namespaceParts = explode("\\", $classFqcn);
+                $className = array_pop($namespaceParts);
+                $namespace = implode("\\", $namespaceParts);
+                $phpNamespace = $file->addNamespace($namespace);
+
+                $path = $this->classPath($classFqcn, $prefix);
 
                 try {
-                    $namespace->addClass($className);
+                    $phpNamespace->addClass($className);
                 } catch (InvalidArgumentException $e) {
-                    if ($e->getMessage() === "Value '$className' is not valid class name.") {
-                        $newClassName = "{$className}Definition";
-                        $namespace->addClass($newClassName);
-                        $path = str_replace("$className.php", "$newClassName.php", $path);
+                    if (str_contains($e->getMessage(), self::ERROR_INVALID_CLASSNAME)) {
+                        $className .= 'Definition';
+                        $phpNamespace->addClass($className);
+                        $path = preg_replace('/\.php$/', 'Definition.php', $path);
+                    } else {
+                        throw $e;
                     }
                 }
-
-                $file->setStrictTypes();
 
                 file_put_contents($path, $file);
             }
@@ -80,17 +82,17 @@ class Generate extends Command
 
     private function source(InputInterface $input): array
     {
-        $lexiconsPath = $input->getArgument('source');
+        $path = $input->getArgument('source');
 
-        if (! file_exists($lexiconsPath)) {
-            throw new \InvalidArgumentException("The path '$lexiconsPath' does not exist.");
+        if (!file_exists($path)) {
+            throw new \InvalidArgumentException(sprintf(self::ERROR_PATH_NOT_EXIST, $path));
         }
 
-        if (! is_readable($lexiconsPath)) {
-            throw new \InvalidArgumentException("The path '$lexiconsPath' is not readable.");
+        if (!is_readable($path)) {
+            throw new \InvalidArgumentException(sprintf(self::ERROR_PATH_NOT_READABLE, $path));
         }
 
-        return [$lexiconsPath];
+        return [$path];
     }
 
     private function flat(array $paths): array
@@ -103,16 +105,14 @@ class Generate extends Command
                 continue;
             }
 
-            if (is_dir($path) && is_readable($path)) {
-                $items = scandir($path);
-
-                foreach ($items as $item) {
-                    if ($item === '.' || $item === '..') {
+            if (is_dir($path)) {
+                foreach (scandir($path) as $item) {
+                    if (in_array($item, ['.', '..'])) {
                         continue;
                     }
-
-                    $fullPath = rtrim($path, DIRECTORY_SEPARATOR). DIRECTORY_SEPARATOR. $item;
-                    $resolved = array_merge($resolved, $this->flat([$fullPath]));
+                    $resolved = array_merge($resolved, $this->flat([
+                        rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $item
+                    ]));
                 }
             }
         }
@@ -120,36 +120,30 @@ class Generate extends Command
         return $resolved;
     }
 
-    private function validated(array $lexicons): array
+    private function validated(array $paths): array
     {
-        return array_filter($lexicons, fn (string $lexicon) =>
-            str_ends_with($lexicon, '.json')
-            && json_validate(file_get_contents($lexicon))
+        return array_filter($paths, fn (string $file) =>
+            str_ends_with($file, '.json') &&
+            json_validate(file_get_contents($file))
         );
     }
 
-
-
     private function classNamespaces(Lexicon $lexicon, ?string $prefix = null): array
     {
+        $nsidParts = explode('.', $lexicon->nsid());
+        $baseNamespace = $prefix . implode("\\", array_map('ucfirst', $nsidParts));
+
+        $definitions = $lexicon->definitions();
+        $primaryTypes = array_map('strtolower', PrimaryTypeEnum::names());
+
         $namespaces = [];
 
-        $nsidParts = explode(".", $lexicon->nsid());
-
-        $baseNamespace = $prefix . implode("\\", array_map(fn (string $part) => ucfirst($part), $nsidParts));
-
-        $types = array_merge(...array_map(
-            fn (array $definition, string $definitionName) => [$definitionName => $definition['type']],
-            $definitions = $lexicon->definitions(),
-            $definitionKeys = array_keys($definitions)
-        ));
-
-        $primaryTypes = array_map(fn (string $type) => strtolower($type), PrimaryTypeEnum::names());
-
-        foreach($definitionKeys as $definitionKey) {
+        foreach ($definitions as $key => $definition) {
+            $type = $definition['type'] ?? '';
             $namespace = $baseNamespace;
-            if (! in_array($types[$definitionKey], $primaryTypes, true)) {
-                $namespace .= "\\" . ucfirst($definitionKey);
+
+            if (!in_array(strtolower($type), $primaryTypes, true)) {
+                $namespace .= "\\" . ucfirst($key);
             }
 
             $namespaces[] = $namespace;
@@ -160,35 +154,25 @@ class Generate extends Command
 
     public function classPath(string $namespace, ?string $prefix = null, bool $create = true): string
     {
-        $prefixPath = null;
+        $prefixPath = $prefix ? $this->prefixPath($prefix) : null;
 
-        if (! is_null($prefix)) {
-            $this->validatePrefix($prefix);
-            $prefixPath = $this->prefixPath($prefix);
+        $normalize = fn(string $ns) => implode(DIRECTORY_SEPARATOR, explode("\\", $ns));
+        $prefixNs = $prefix ? $normalize($prefix) : '';
+        $normalizedNamespace = $normalize($namespace);
+
+        if ($prefixPath) {
+            $prefixPath = rtrim($prefixPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            $relativePath = str_replace($prefixNs, '', $normalizedNamespace);
+        } else {
+            $relativePath = ltrim($normalizedNamespace, DIRECTORY_SEPARATOR);
         }
 
-        $normalize = fn(?string $namespace) => implode(
-            DIRECTORY_SEPARATOR,
-            explode("\\",
-                $namespace ?? [])
-        );
+        $path = $prefixPath
+            . ltrim($relativePath, DIRECTORY_SEPARATOR)
+            . '.php';
 
-        $prefix = $normalize($prefix);
-        $namespace = $normalize($namespace);
-
-        if (! is_null($prefixPath)) {
-            $namespace = str_replace($prefix, "", $namespace);
-        }
-
-        $path = $prefixPath . DIRECTORY_SEPARATOR . $namespace . ".php";
-
-        if ($create) {
-            if (! $this->filesystem->exists($path)) {
-                $pathParts = explode(DIRECTORY_SEPARATOR, $path);
-                array_pop($pathParts);
-                $directoryPath = implode(DIRECTORY_SEPARATOR, $pathParts);
-                $this->filesystem->mkdir($directoryPath, 0775);
-            }
+        if ($create && !$this->filesystem->exists($path)) {
+            $this->filesystem->mkdir(dirname($path), 0775);
         }
 
         return $path;
@@ -196,13 +180,14 @@ class Generate extends Command
 
     private function prefixPath(string $prefix): string
     {
+        $this->validatePrefix($prefix);
         return current($this->classLoader->getPrefixesPsr4()[$prefix]);
     }
 
     private function validatePrefix(string $prefix): void
     {
-        if (! isset($this->classLoader->getPrefixesPsr4()[$prefix])) {
-            throw new \RuntimeException("Prefix '$prefix' does not registered.");
+        if (!isset($this->classLoader->getPrefixesPsr4()[$prefix])) {
+            throw new \RuntimeException(sprintf(self::ERROR_INVALID_PREFIX, $prefix));
         }
     }
 }
