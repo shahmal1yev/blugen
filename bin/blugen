@@ -1,0 +1,39 @@
+#!/usr/bin/env php
+<?php
+
+use Composer\Autoload\ClassLoader;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+
+
+$loader = require_once __DIR__ . '/../vendor/autoload.php';
+
+$input = new ArgvInput();
+$bootstrap = $input->getParameterOption('--bootstrap', __DIR__ . '/../vendor/autoload.php');
+
+if (!file_exists($bootstrap)) {
+    fwrite(STDERR, "Bootstrap file not found: $bootstrap\n");
+    exit(1);
+}
+
+/** @var \Composer\Autoload\ClassLoader $classLoader */
+$classLoader = require $bootstrap;
+
+$container = new ContainerBuilder();
+$container->set(ClassLoader::class, $classLoader);
+
+$loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../config'));
+$loader->load('services.php');
+
+$container->compile();
+
+\Blugen\Container::set($container);
+
+$app = new Application('blugen');
+
+$app->add(new \Blugen\Command\Generate());
+
+$app->run($input);
