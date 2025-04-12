@@ -1,0 +1,60 @@
+<?php
+
+namespace Blugen\Service\Lexicon\V1;
+
+use Blugen\Service\Lexicon\DefinitionInterface;
+use Blugen\Service\Lexicon\LexiconInterface;
+
+class Definition implements DefinitionInterface
+{
+    public function __construct(
+        private readonly LexiconInterface $lexicon,
+        private readonly string $name
+    )
+    {
+        if (! isset($this->lexicon->defs()[$this->name])) {
+            throw new \LogicException("Definition '{$this->name}' does not exist in the lexicon.");
+        }
+    }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function type(): string
+    {
+        return $this->lexicon->defs()[$this->name]['type'];
+    }
+
+    public function description(): ?string
+    {
+        return $this->lexicon->defs()[$this->name]['description'] ?? null;
+    }
+
+    public function lexicon(): LexiconInterface
+    {
+        return $this->lexicon;
+    }
+
+    public function __get(string $name): mixed
+    {
+        $def = $this->lexicon->defs()[$this->name()] ?? null;
+
+        if (!is_array($def)) {
+            return null;
+        }
+
+        $pathParts = explode('.', $name);
+
+        foreach ($pathParts as $part) {
+            if (is_array($def) && array_key_exists($part, $def)) {
+                $def = $def[$part];
+            } else {
+                return null;
+            }
+        }
+
+        return $def;
+    }
+}
