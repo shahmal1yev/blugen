@@ -1,0 +1,23 @@
+<?php
+
+namespace Blugen\Service\Lexicon\V1\Factory;
+
+use Blugen\Service\Lexicon\GeneratorInterface;
+use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\ObjectComponentGenerator;
+use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\StringComponentGenerator;
+use Blugen\Service\Lexicon\V1\Property;
+use Nette\PhpGenerator\ClassType;
+
+class ComponentGeneratorFactory
+{
+    public static function create(ClassType $class, Property $property): GeneratorInterface
+    {
+        $type = $property->schema()->type();
+
+        return match($type) {
+            'string' => new StringComponentGenerator($class, $property),
+            'object' => new ObjectComponentGenerator($class, $property),
+            default => throw new \RuntimeException("Unsupported type: $type"),
+        };
+    }
+}

@@ -1,0 +1,18 @@
+<?php
+
+namespace Blugen\Service\Lexicon\V1\Factory;
+
+use Blugen\Service\Lexicon\DefinitionInterface;
+use Blugen\Service\Lexicon\GeneratorInterface;
+use Blugen\Service\Lexicon\V1\DefGenerator\Field\ObjectGenerator;
+use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\FieldType\ObjectTypeDefinition;
+
+class DefGeneratorFactory
+{
+    public static function create(DefinitionInterface $definition): GeneratorInterface
+    {
+        return match($definition->type()) {
+            'object' => new ObjectGenerator(new ObjectTypeDefinition($definition)),
+        };
+    }
+}
