@@ -3,6 +3,8 @@
 namespace Blugen\Service\Lexicon\V1\Factory;
 
 use Blugen\Service\Lexicon\GeneratorInterface;
+use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\BooleanComponentGenerator;
+use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\IntegerComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\ObjectComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\StringComponentGenerator;
 use Blugen\Service\Lexicon\V1\Property;
@@ -17,6 +19,8 @@ class ComponentGeneratorFactory
         return match($type) {
             'string' => new StringComponentGenerator($class, $property),
             'object' => new ObjectComponentGenerator($class, $property),
+            'integer' => new IntegerComponentGenerator($class, $property),
+            'boolean' => new BooleanComponentGenerator($class, $property),
             default => throw new \RuntimeException("Unsupported type: $type"),
         };
     }
