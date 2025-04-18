@@ -6,6 +6,7 @@ use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\ArrayComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\BooleanComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\BytesComponentGenerator;
+use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\CidLinkComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\IntegerComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\NullComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\ObjectComponentGenerator;
@@ -29,6 +30,7 @@ class ComponentGeneratorFactory
             'bytes' => new BytesComponentGenerator($class, $property),
             'params' => new ParamsComponentGenerator($class, $property),
             'null' => new NullComponentGenerator($class, $property),
+            'cid-link' => new CidLinkComponentGenerator($class, $property),
             default => throw new \RuntimeException("Unsupported type: $type"),
         };
     }
