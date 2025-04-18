@@ -7,6 +7,7 @@ use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\ArrayComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\BooleanComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\BytesComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\IntegerComponentGenerator;
+use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\NullComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\ObjectComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\ParamsComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\StringComponentGenerator;
@@ -27,6 +28,7 @@ class ComponentGeneratorFactory
             'array' => new ArrayComponentGenerator($class, $property),
             'bytes' => new BytesComponentGenerator($class, $property),
             'params' => new ParamsComponentGenerator($class, $property),
+            'null' => new NullComponentGenerator($class, $property),
             default => throw new \RuntimeException("Unsupported type: $type"),
         };
     }
