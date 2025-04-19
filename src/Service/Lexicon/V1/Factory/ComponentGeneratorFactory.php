@@ -15,6 +15,7 @@ use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\StringComponentGenerator;
 use Blugen\Service\Lexicon\V1\Property;
 use Nette\PhpGenerator\ClassType;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\BlobComponentGenerator;
+use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\TokenComponentGenerator;
 
 class ComponentGeneratorFactory
 {
@@ -33,6 +34,7 @@ class ComponentGeneratorFactory
             'null' => new NullComponentGenerator($class, $property),
             'cid-link' => new CidLinkComponentGenerator($class, $property),
             'blob' => new BlobComponentGenerator($class, $property),
+            'token' => new TokenComponentGenerator($class, $property),
             default => throw new \RuntimeException("Unsupported type: $type"),
         };
     }
