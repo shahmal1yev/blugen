@@ -13,6 +13,7 @@ use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\ObjectComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\ParamsComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\RefComponentGenerator;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\StringComponentGenerator;
+use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\UnionComponentGenerator;
 use Blugen\Service\Lexicon\V1\Property;
 use Nette\PhpGenerator\ClassType;
 use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\BlobComponentGenerator;
@@ -37,6 +38,7 @@ class ComponentGeneratorFactory
             'blob' => new BlobComponentGenerator($class, $property),
             'token' => new TokenComponentGenerator($class, $property),
             'ref' => new RefComponentGenerator($class, $property),
+            'union' => new UnionComponentGenerator($class, $property),
             default => throw new \RuntimeException("Unsupported type: $type"),
         };
     }
