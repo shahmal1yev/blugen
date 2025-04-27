@@ -13,7 +13,7 @@ class Definition implements DefinitionInterface
     )
     {
         if (! isset($this->lexicon->defs()[$this->name])) {
-            throw new \LogicException("Definition '{$this->name}' does not exist in the lexicon.");
+            throw new \InvalidArgumentException("Definition '{$this->name}' does not exist in the lexicon.");
         }
     }
 
@@ -40,10 +40,6 @@ class Definition implements DefinitionInterface
     public function __get(string $name): mixed
     {
         $def = $this->lexicon->defs()[$this->name()] ?? null;
-
-        if (!is_array($def)) {
-            return null;
-        }
 
         $pathParts = explode('.', $name);
 
