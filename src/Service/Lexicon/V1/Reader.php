@@ -3,19 +3,30 @@
 namespace Blugen\Service\Lexicon\V1;
 
 use Blugen\Service\Lexicon\ReaderInterface;
+use RuntimeException;
 
 class Reader implements ReaderInterface
 {
-    private array $paths;
+    private array $paths = [];
 
-    public function __construct(private readonly ?string $path = null)
-    {
+    public function __construct(
+        private readonly ?string $path = null
+    ) {
     }
 
     public function read(?string $path = null): static
     {
-        $path ??= $this->path;
-        $this->paths = $this->flatPath($path);
+        $targetPath = $path ?? $this->path;
+
+        if ($targetPath === null) {
+            throw new RuntimeException("No path provided to read.");
+        }
+
+        if (!is_readable($targetPath)) {
+            throw new RuntimeException("Path '$targetPath' is not readable.");
+        }
+
+        $this->paths = $this->resolvePaths($targetPath);
 
         return $this;
     }
@@ -25,28 +36,25 @@ class Reader implements ReaderInterface
         return $this->paths;
     }
 
-    private function flatPath(?string $path): array
+    private function resolvePaths(string $path): array
     {
-        $resolved = [];
-
-        if ($path && ! is_readable($path)) {
-            throw new \RuntimeException("Path '$path' is not readable.");
-        }
-
         if (is_file($path)) {
-            $resolved[] = $path;
+            return [$path];
         }
 
         if (is_dir($path)) {
-            foreach (scandir($path) as $file) {
-                $resolved = array_merge($resolved, $this->flatPath(
-                    rtrim($path, DIRECTORY_SEPARATOR)
-                    . DIRECTORY_SEPARATOR
-                    . $file
-                ));
+            $entries = array_diff(scandir($path) ?: [], ['.', '..']);
+            $files = [];
+
+            foreach ($entries as $entry) {
+                $fullPath = $path . DIRECTORY_SEPARATOR . $entry;
+                $files = [...$files, ...$this->resolvePaths($fullPath)];
             }
+
+            return $files;
         }
 
-        return array_filter($resolved, fn (string $path) => ! in_array($path, ['.', '..'], true));
+        // Unexpected case: neither file nor directory
+        return [];
     }
 }
