@@ -4,7 +4,7 @@ namespace Blugen\Service\Lexicon\V1\ComponentGenerator\Field;
 
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Property;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType\NullSchema;
+use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\NullSchema;
 use Nette\PhpGenerator\ClassType;
 
 class NullComponentGenerator implements GeneratorInterface

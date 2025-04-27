@@ -1,10 +1,10 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType;
+namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 
-class BooleanSchema implements SchemaInterface
+class UnionSchema implements SchemaInterface
 {
     public function __construct(private readonly SchemaInterface $schema)
     {}
@@ -24,13 +24,16 @@ class BooleanSchema implements SchemaInterface
         return $this->schema->description() ?? null;
     }
 
-    public function default(): ?bool
+    /**
+     * @return string[]
+     */
+    public function refs(): array
     {
-        return $this->__get('default');
+        return $this->__get('refs') ?? [];
     }
 
-    public function const(): ?bool
+    public function closed(): bool
     {
-        return $this->__get('const');
+        return (bool) ($this->__get('closed') ?? false);
     }
 }

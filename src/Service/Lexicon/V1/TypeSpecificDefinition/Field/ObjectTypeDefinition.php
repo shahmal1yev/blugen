@@ -1,6 +1,6 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificDefinition\FieldType;
+namespace Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Field;
 
 use Blugen\Service\Lexicon\DefinitionInterface;
 use Blugen\Service\Lexicon\LexiconInterface;

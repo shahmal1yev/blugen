@@ -6,8 +6,8 @@ use Blugen\Service\Lexicon\DefinitionInterface;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\DefGenerator\Field\ArrayGenerator;
 use Blugen\Service\Lexicon\V1\DefGenerator\Field\ObjectGenerator;
-use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\FieldType\ArrayTypeDefinition;
-use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\FieldType\ObjectTypeDefinition;
+use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Field\ArrayTypeDefinition;
+use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Field\ObjectTypeDefinition;
 
 class DefGeneratorFactory
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType;
+namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 
-class CidLinkSchema implements SchemaInterface
+class TokenSchema implements SchemaInterface
 {
     public function __construct(
         private readonly SchemaInterface $schema
@@ -12,7 +12,7 @@ class CidLinkSchema implements SchemaInterface
 
     public function type(): string
     {
-        return 'cid-link';
+        return 'token';
     }
 
     public function description(): ?string

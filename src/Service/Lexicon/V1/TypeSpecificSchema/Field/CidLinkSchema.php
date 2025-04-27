@@ -1,19 +1,18 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType;
+namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 
-class RefSchema implements SchemaInterface
+class CidLinkSchema implements SchemaInterface
 {
     public function __construct(
-        private readonly SchemaInterface $schema,
-    )
-    {}
+        private readonly SchemaInterface $schema
+    ) {}
 
     public function type(): string
     {
-        return $this->schema->type();
+        return 'cid-link';
     }
 
     public function description(): ?string
@@ -24,10 +23,5 @@ class RefSchema implements SchemaInterface
     public function __get(string $name): mixed
     {
         return $this->schema->__get($name);
-    }
-
-    public function ref(): string
-    {
-        return $this->__get('ref');
     }
 }

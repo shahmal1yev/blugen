@@ -1,18 +1,19 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType;
+namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 
-class TokenSchema implements SchemaInterface
+class RefSchema implements SchemaInterface
 {
     public function __construct(
-        private readonly SchemaInterface $schema
-    ) {}
+        private readonly SchemaInterface $schema,
+    )
+    {}
 
     public function type(): string
     {
-        return 'token';
+        return $this->schema->type();
     }
 
     public function description(): ?string
@@ -23,5 +24,10 @@ class TokenSchema implements SchemaInterface
     public function __get(string $name): mixed
     {
         return $this->schema->__get($name);
+    }
+
+    public function ref(): string
+    {
+        return $this->__get('ref');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType;
+namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 

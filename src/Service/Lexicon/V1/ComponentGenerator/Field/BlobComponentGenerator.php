@@ -4,7 +4,7 @@ namespace Blugen\Service\Lexicon\V1\ComponentGenerator\Field;
 
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Property;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType\BlobSchema;
+use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\BlobSchema;
 use Nette\PhpGenerator\ClassType;
 
 class BlobComponentGenerator implements GeneratorInterface

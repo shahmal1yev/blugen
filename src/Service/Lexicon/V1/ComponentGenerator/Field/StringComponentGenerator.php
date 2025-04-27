@@ -4,7 +4,7 @@ namespace Blugen\Service\Lexicon\V1\ComponentGenerator\Field;
 
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Property;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType\StringSchema;
+use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\StringSchema;
 use Nette\PhpGenerator\ClassType;
 
 class StringComponentGenerator implements GeneratorInterface

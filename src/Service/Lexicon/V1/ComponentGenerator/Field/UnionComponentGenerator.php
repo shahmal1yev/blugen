@@ -5,7 +5,7 @@ namespace Blugen\Service\Lexicon\V1\ComponentGenerator\Field;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Resolver\NsidResolver;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType\UnionSchema;
+use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\UnionSchema;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Literal;
 

@@ -5,7 +5,7 @@ namespace Blugen\Service\Lexicon\V1\ComponentGenerator\Field;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Factory\ComponentGeneratorFactory;
 use Blugen\Service\Lexicon\V1\Property;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\FieldType\ParamsSchema;
+use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ParamsSchema;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Literal;
 
