@@ -28,7 +28,7 @@ class ArraySchema implements SchemaInterface
 
     public function items(): string
     {
-        return $this->__get('items');
+        return $this->__get('items.type');
     }
 
     public function minLength(): ?int
