@@ -6,9 +6,11 @@ use Blugen\Service\Lexicon\DefinitionInterface;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\DefGenerator\Field\ArrayGenerator;
 use Blugen\Service\Lexicon\V1\DefGenerator\Field\ObjectGenerator;
+use Blugen\Service\Lexicon\V1\DefGenerator\Primary\QueryGenerator;
 use Blugen\Service\Lexicon\V1\DefGenerator\Primary\RecordGenerator;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Field\ArrayTypeDefinition;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Field\ObjectTypeDefinition;
+use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\QueryTypeDefinition;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\RecordTypeDefinition;
 
 class DefGeneratorFactory
@@ -19,6 +21,7 @@ class DefGeneratorFactory
             'object' => new ObjectGenerator(new ObjectTypeDefinition($definition)),
             'array' => new ArrayGenerator(new ArrayTypeDefinition($definition)),
             'record' => new RecordGenerator(new RecordTypeDefinition($definition)),
+            'query' => new QueryGenerator(new QueryTypeDefinition($definition)),
             default => throw new \RuntimeException("Unexpected definition type '{$definition->type()}'")
         };
     }
