@@ -3,6 +3,7 @@
 namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support;
 
 use ArrayIterator;
+use Blugen\Enum\SupportTypeEnum;
 use Blugen\Service\Lexicon\SchemaInterface;
 
 class ErrorsSchema implements SchemaInterface, \IteratorAggregate, \Countable
@@ -24,7 +25,7 @@ class ErrorsSchema implements SchemaInterface, \IteratorAggregate, \Countable
 
     public function type(): string
     {
-        return 'errors';
+        return SupportTypeEnum::ERRORS->value;
     }
 
     public function description(): ?string

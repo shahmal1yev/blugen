@@ -9,19 +9,20 @@ use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ObjectSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\RefSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\UnionSchema;
 
-class OutputSchema implements SchemaInterface
+class InputSchema implements SchemaInterface
 {
-    public function __construct(private readonly SchemaInterface $schema)
-    {}
+    public function __construct(private SchemaInterface $schema)
+    {
+    }
 
     public function type(): string
     {
-        return SupportTypeEnum::OUTPUT->value;
+        return SupportTypeEnum::INPUT->value;
     }
 
     public function description(): ?string
     {
-        return $this->schema->description();
+        return null;
     }
 
     public function __get(string $name): mixed
