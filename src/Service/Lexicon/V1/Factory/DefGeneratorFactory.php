@@ -9,11 +9,13 @@ use Blugen\Service\Lexicon\V1\DefGenerator\Field\ObjectGenerator;
 use Blugen\Service\Lexicon\V1\DefGenerator\Primary\ProcedureGenerator;
 use Blugen\Service\Lexicon\V1\DefGenerator\Primary\QueryGenerator;
 use Blugen\Service\Lexicon\V1\DefGenerator\Primary\RecordGenerator;
+use Blugen\Service\Lexicon\V1\DefGenerator\Primary\SubscriptionGenerator;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Field\ArrayTypeDefinition;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Field\ObjectTypeDefinition;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\ProcedureTypeDefinition;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\QueryTypeDefinition;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\RecordTypeDefinition;
+use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\SubscriptionTypeDefinition;
 
 class DefGeneratorFactory
 {
@@ -25,6 +27,7 @@ class DefGeneratorFactory
             'record' => new RecordGenerator(new RecordTypeDefinition($definition)),
             'query' => new QueryGenerator(new QueryTypeDefinition($definition)),
             'procedure' => new ProcedureGenerator(new ProcedureTypeDefinition($definition)),
+            'subscription' => new SubscriptionGenerator(new SubscriptionTypeDefinition($definition)),
             default => throw new \RuntimeException("Unexpected definition type '{$definition->type()}'")
         };
     }
