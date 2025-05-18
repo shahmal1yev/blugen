@@ -2,6 +2,7 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Blugen\Config\ConfigManager;
 use Composer\Autoload\ClassLoader;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -13,4 +14,5 @@ return static function (ContainerConfigurator $container): void {
         ->public();
 
     $services->set(ClassLoader::class)->public();
+    $services->set(ConfigManager::class)->public();
 };

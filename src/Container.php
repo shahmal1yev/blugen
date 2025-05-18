@@ -2,36 +2,46 @@
 
 namespace Blugen;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Simple container accessor class
+ */
 class Container
 {
-    private static ?ContainerBuilder $instance = null;
+    private static ?ContainerInterface $container = null;
 
-    private function __construct()
-    {}
-
-    public function __clone(): never
+    public static function set(ContainerInterface $container): void
     {
-        throw new \BadMethodCallException('Cloning is not allowed.');
+        self::$container = $container;
     }
 
-    public function __wakeup()
+    public static function get(): ?ContainerInterface
     {
-        throw new \BadMethodCallException('Unserializing is not allowed.');
+        return self::$container;
     }
 
-    public static function get(): ContainerBuilder
+    /**
+     * Get a service from the container
+     */
+    public static function getService(string $id)
     {
-        if (null === static::$instance) {
-            throw new \RuntimeException("Container has not been initialized.");
+        if (self::$container === null) {
+            throw new \RuntimeException('Container is not initialized');
         }
 
-        return static::$instance;
+        return self::$container->get($id);
     }
 
-    public static function set(ContainerBuilder $container): void
+    /**
+     * Get a parameter from the container
+     */
+    public static function getParameter(string $name)
     {
-        static::$instance = $container;
+        if (self::$container === null) {
+            throw new \RuntimeException('Container is not initialized');
+        }
+
+        return self::$container->getParameter($name);
     }
 }
