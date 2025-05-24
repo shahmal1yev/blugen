@@ -17,6 +17,17 @@ class Definition implements DefinitionInterface
         }
     }
 
+    public static function fromNsid(Nsid $nsid): DefinitionInterface
+    {
+        $lexicon = Lexicon::fromNsid($nsid);
+
+        if (! $name = $nsid->fragment()) {
+            $name = 'main';
+        }
+
+        return new self($lexicon, ltrim($name, '#'));
+    }
+
     public function name(): string
     {
         return $this->name;
