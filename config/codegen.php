@@ -2,7 +2,7 @@
 
 return [
     'lexicons' => [
-//        'source' => __DIR__ . "/../atproto/lexicons",
+        'source' => __DIR__ . "/../atproto/lexicons",
     ],
 
     'output' => [
