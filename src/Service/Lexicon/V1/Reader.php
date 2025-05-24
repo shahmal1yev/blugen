@@ -2,16 +2,22 @@
 
 namespace Blugen\Service\Lexicon\V1;
 
+use Blugen\Config\ConfigManager;
 use Blugen\Service\Lexicon\ReaderInterface;
 use RuntimeException;
 
 class Reader implements ReaderInterface
 {
     private array $paths = [];
+    private readonly ConfigManager $config;
+    private readonly ?string $path;
 
     public function __construct(
-        private readonly ?string $path = null
+        ?string $path = null,
+        ?ConfigManager $config = null,
     ) {
+        $this->config = $config ?? container()->get(ConfigManager::class);
+        $this->path = (string) ($path ?? $this->config->get('lexicons.source'));
     }
 
     public function read(?string $path = null): static
