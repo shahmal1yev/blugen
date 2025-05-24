@@ -61,15 +61,17 @@ class Generate extends Command
 
         /** @var GeneratorInterface $generator */
         $generator = \container()->get(GeneratorInterface::class);
+        $generated = $generator->generate();
 
-        foreach($generator->generate() as $path => $content) {
-            $dirname = dirname($path);
-
-            if (! file_exists($dirname)) {
-                mkdir($dirname, 0755, true);
+        foreach($generated as $path => $content) {
+            if (! file_exists($path)) {
+                mkdir($path, 0755, true);
             }
 
-            file_put_contents($path, $content);
+            foreach($content as $fileName => $class) {
+                $filePath = $path . DIRECTORY_SEPARATOR . $fileName;
+                file_put_contents($filePath, $class);
+            }
         }
 
         return Command::SUCCESS;

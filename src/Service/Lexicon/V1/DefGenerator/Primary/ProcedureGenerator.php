@@ -22,83 +22,80 @@ class ProcedureGenerator implements GeneratorInterface
     private readonly PhpFile $file;
     private readonly PhpNamespace $namespace;
     private readonly ClassType $class;
+    private readonly string $className;
+    private readonly string $namespaceString;
 
     public function __construct(private readonly ProcedureTypeDefinition $definition)
     {
-        [$namespaceString, $className] = NamespaceResolver::namespace($this->definition->lexicon(), $this->definition);
+        [$this->namespaceString, $this->className] = NamespaceResolver::namespace($this->definition->lexicon(), $this->definition);
 
         $this->file = new PhpFile();
-        $this->namespace = $this->file->addNamespace($namespaceString);
-        $this->class = $this->namespace->addClass($className);
+        $this->namespace = $this->file->addNamespace($this->namespaceString);
+        $this->class = $this->namespace->addClass($this->className);
 
         $this->file->setStrictTypes();
     }
 
-    public function generate(): string
+    public function generate(): array
     {
+        $result = [];
+
         $this->class->addImplement(ProcedureInterface::class);
-
-        $schemaProperty = $this->class->addProperty("schema")
-            ->setType('object')
-            ->setPrivate();
-
-        $setSchemaMethod = $this->class->addMethod("setSchema")
-            ->setPublic()
-            ->setReturnType('object');
-
-        $getSchemaMethod = $this->class->addMethod("getSchema")
-            ->setPublic()
-            ->setReturnType('object');
 
         $schema = $this->definition->input()?->schema();
 
-        if ($schema instanceof ObjectSchema) {
-            $anonClass = new ClassType();
+        if ($schema instanceof UnionSchema) {
+            $refs = array_map(function (string $ref) {
+                $ref = NsidResolver::namespace($ref);
 
-            foreach($schema?->properties() as $property) {
-                $generator = ComponentGeneratorFactory::create($anonClass, $property);
+                $this->namespace->addUse($ref);
 
-                if ($generator instanceof RefComponentGenerator) {
-                    $a = 12;
-                }
+                return $ref;
+            }, $schema->refs());
 
-                $generator->generate();
-            }
-
-            $setSchemaMethod->addBody(new Literal("return \$this->schema = new class $anonClass;"));
-            $getSchemaMethod->addBody(new Literal("return \$this->schema;"));
-
-            return $this->file->__toString();
+            $schemaClassName = implode("|", $refs);
         }
-
-        $refs = [];
 
         if ($schema instanceof RefSchema) {
-            $refs[] = $schema->ref();
+            $schemaClassName = NsidResolver::namespace($schema->ref());
+            $this->namespace->addUse($schemaClassName);
         }
 
-        if ($schema instanceof UnionSchema) {
-            $refs = array_merge($refs, $schema->refs());
+        if ($schema instanceof ObjectSchema) {
+            $schemaFile = new PhpFile();
+            $schemaFile->setStrictTypes();
+            $schemaPhpNamespace = $schemaFile->addNamespace($this->namespaceString);
+            $schemaClassName = "{$this->className}Schema";
+            $schemaNamespace = sprintf("%s\\%s", $schemaPhpNamespace->getName(), $schemaClassName);
+            $schemaClass = $schemaPhpNamespace->addClass($schemaClassName);
+
+            foreach($schema->properties() as $property) {
+                ComponentGeneratorFactory::create($schemaClass, $property)->generate();
+            }
+
+            $this->class->addMethod("setSchema")
+                ->setPublic()
+                ->setReturnType(new Literal("self"))
+                ->addBody(new Literal("\$this->schema = \$schema;\nreturn \$this;"))
+                ->addParameter("schema")
+                ->setType($schemaNamespace);
+
+            $this->class->addMethod("getSchema")
+                ->setPublic()
+                ->setReturnType($schemaNamespace)
+                ->addBody(new Literal("return \$this->schema;"));
+
+            $this->class->addProperty("schema")
+                ->setType($schemaNamespace)
+                ->setPrivate();
+
+            $this->namespace->addUse($schemaNamespace);
+
+            $result["$schemaClassName.php"] = $schemaFile->__toString();
         }
 
-        $refs = array_map(function ($ref) {
-            $ref = NsidResolver::namespace($ref);
+        $result["$this->className.php"] = $this->file->__toString();
 
-            $this->file->addUse($ref);
-
-            return $ref;
-        }, $refs);
-
-        $setSchemaMethod->setReturnType("self")
-            ->addBody(new Literal("\$this->schame = \$schema;\nreturn \$this;"))
-            ->addParameter("schema")
-            ->setType(implode("|", $refs));
-
-        $getSchemaMethod->addBody(new Literal("return \$this->schame;"))
-            ->setReturnType(implode("|", $refs));
-
-        $schemaProperty->setType(implode("|", $refs));
-
-        return $this->file->__toString();
+        return $result;
     }
 }
