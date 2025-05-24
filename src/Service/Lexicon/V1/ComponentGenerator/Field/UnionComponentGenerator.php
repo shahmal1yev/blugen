@@ -30,7 +30,7 @@ class UnionComponentGenerator implements GeneratorInterface
     private function generateProperty(): void
     {
         foreach ($this->schema->refs() as $ref) {
-            $this->class->getNamespace()->addUse(NsidResolver::namespace("$ref"));
+            $this->class->getNamespace()?->addUse(NsidResolver::namespace("$ref"));
         }
 
         $this->class->addProperty($this->property->name())
