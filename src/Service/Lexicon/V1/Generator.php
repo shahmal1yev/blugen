@@ -24,7 +24,7 @@ class Generator implements GeneratorInterface
                 $definition = new Definition($lexicon, $definitionName);
 
                 $classPath = NamespaceResolver::path($lexicon, $definition);
-                $generatedClass = DefGeneratorFactory::create($definition)->generate();
+                $generatedClass = DefGeneratorFactory::create($definition)?->generate();
 
                 $generated[$classPath] = $generatedClass;
             }

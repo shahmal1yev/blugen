@@ -21,7 +21,7 @@ use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\SubscriptionTypeDef
 
 class DefGeneratorFactory
 {
-    public static function create(DefinitionInterface $definition): GeneratorInterface
+    public static function create(DefinitionInterface $definition): ?GeneratorInterface
     {
         return match($definition->type()) {
             'object' => new ObjectGenerator(new ObjectTypeDefinition($definition)),
@@ -31,6 +31,7 @@ class DefGeneratorFactory
             'procedure' => new ProcedureGenerator(new ProcedureTypeDefinition($definition)),
             'subscription' => new SubscriptionGenerator(new SubscriptionTypeDefinition($definition)),
             'string' => new StringGenerator(new StringTypeDefinition($definition)),
+            'token' => null,
             default => throw new \RuntimeException("Unexpected definition type '{$definition->type()}'")
         };
     }
