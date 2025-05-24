@@ -104,19 +104,17 @@ PHP
     private function generateArrayDelegates(): void
     {
         $delegates = [
-            'getItems' => ['array', 'return $this->handler->getItems();'],
+            'getItems' => ['array', 'return $this->handler->getItems();', []],
             'setItems' => ['void', '$this->handler->setItems($items);', [['items', 'array']]],
             'offsetExists' => ['bool', 'return $this->handler->offsetExists($offset);', [['offset', 'mixed']]],
             'offsetGet' => ['mixed', 'return $this->handler->offsetGet($offset);', [['offset', 'mixed']]],
             'offsetSet' => ['void', '$this->handler->offsetSet($offset, $value);', [['offset', 'mixed'], ['value', 'mixed']]],
             'offsetUnset' => ['void', '$this->handler->offsetUnset($offset);', [['offset', 'mixed']]],
-            'getIterator' => ['Traversable', 'return $this->handler->getIterator();'],
-            'count' => ['int', 'return $this->handler->count();'],
+            'getIterator' => ['Traversable', 'return $this->handler->getIterator();', []],
+            'count' => ['int', 'return $this->handler->count();', []],
         ];
 
         foreach ($delegates as $name => [$returnType, $body, $params]) {
-            $params ??= [];
-
             $method = $this->class->addMethod($name)
                 ->setPublic()
                 ->setReturnType($returnType)
