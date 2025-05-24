@@ -45,7 +45,7 @@ return (function () {
 
     // Set up the container
     $container = new ContainerBuilder();
-    $container->set(ClassLoader::class, $classLoader);
+    $container->set('loader', $classLoader);
     $container->set(ConfigManager::class, $configManager);
 
     // Add config as container parameter
