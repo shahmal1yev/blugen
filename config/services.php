@@ -3,6 +3,7 @@
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Blugen\Config\ConfigManager;
+use Blugen\Service\Lexicon\V1\Nsid;
 use Composer\Autoload\ClassLoader;
 use Symfony\Component\Filesystem\Filesystem;
 

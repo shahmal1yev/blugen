@@ -1,6 +1,7 @@
 <?php
 
-function container(): Symfony\Component\DependencyInjection\ContainerBuilder {
+function container(): \Symfony\Component\DependencyInjection\ContainerInterface
+{
     return \Blugen\Container::get();
 }
 

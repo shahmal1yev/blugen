@@ -18,7 +18,7 @@ class Generate extends Command
     public function __construct(ConfigManager $configManager = null)
     {
         parent::__construct();
-        $this->configManager = $configManager ?? Container::getService(ConfigManager::class);
+        $this->configManager = $configManager ?? container()->get(ConfigManager::class);
     }
 
     protected function configure(): void

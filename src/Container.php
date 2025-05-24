@@ -16,32 +16,12 @@ class Container
         self::$container = $container;
     }
 
-    public static function get(): ?ContainerInterface
+    public static function get(): ContainerInterface
     {
+        if (null === self::$container) {
+            throw new \LogicException('Container has not been set yet.');
+        }
+
         return self::$container;
-    }
-
-    /**
-     * Get a service from the container
-     */
-    public static function getService(string $id)
-    {
-        if (self::$container === null) {
-            throw new \RuntimeException('Container is not initialized');
-        }
-
-        return self::$container->get($id);
-    }
-
-    /**
-     * Get a parameter from the container
-     */
-    public static function getParameter(string $name)
-    {
-        if (self::$container === null) {
-            throw new \RuntimeException('Container is not initialized');
-        }
-
-        return self::$container->getParameter($name);
     }
 }
