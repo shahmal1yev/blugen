@@ -69,8 +69,8 @@ class Generate extends Command
     private function options(InputInterface $input): array
     {
         $options = [
-            'source' => (string) $input->getOption('source') ?? $this->configManager->get('lexicons.source'),
-            'base-namespace' => (string) $input->getOption('base-namespace') ?? $this->configManager->get('output.base_namespace'),
+            'source' => (string) ($input->getOption('source') ?? $this->configManager->get('lexicons.source')),
+            'base-namespace' => (string) ($input->getOption('base-namespace') ?? $this->configManager->get('output.base_namespace')),
         ];
 
         $violations = $this->validate($options);
