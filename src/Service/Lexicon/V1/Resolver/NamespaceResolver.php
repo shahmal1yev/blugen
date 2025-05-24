@@ -2,10 +2,10 @@
 
 namespace Blugen\Service\Lexicon\V1\Resolver;
 
+use Blugen\Config\ConfigManager;
 use Blugen\Enum\PrimaryTypeEnum;
 use Blugen\Service\Lexicon\DefinitionInterface;
 use Blugen\Service\Lexicon\LexiconInterface;
-use Blugen\Service\Lexicon\NamespaceResolverInterface;
 
 use function \toPascalCase;
 
@@ -20,7 +20,7 @@ class NamespaceResolver
     {
         self::assertDefinitionExists($lexicon, $definition);
 
-        $namespaceParts = array_map('ucwords', explode('.', $lexicon->nsid()));
+        $namespaceParts = array_map('ucfirst', explode('.', $lexicon->nsid()));
         $definitionName = toPascalCase($definition->name());
 
         // If definition type is primary, override class name with last part of NSID
@@ -29,8 +29,15 @@ class NamespaceResolver
         }
 
         $namespace = implode('\\', $namespaceParts);
+        $namespace = self::prefixed($namespace);
 
         return [$namespace, $definitionName];
+    }
+
+    public static function prefixed(string $namespace): string
+    {
+        $baseNamespace = container()->get(ConfigManager::class)->get('output.base_namespace') ?? null;
+        return $baseNamespace . $namespace;
     }
 
     /**
@@ -42,9 +49,19 @@ class NamespaceResolver
 
         [$namespace, $className] = self::namespace($lexicon, $definition);
 
+        $baseNamespace = container()->get(ConfigManager::class)->get('output.base_namespace') ?? null;
+
+        if ($baseNamespace) {
+            $namespace = str_replace(
+                $baseNamespace,
+                container()->get('loader')->getPrefixesPsr4()[$baseNamespace][0] . DIRECTORY_SEPARATOR,
+                $namespace
+            );
+        }
+
         return str_replace('\\', DIRECTORY_SEPARATOR, $namespace)
             . DIRECTORY_SEPARATOR
-            . $className;
+            . $className . ".php";
     }
 
     /**
