@@ -3,6 +3,7 @@
 namespace Blugen\Service\Lexicon\V1;
 
 use Blugen\Service\Lexicon\LexiconInterface;
+use Blugen\Service\Lexicon\V1\Resolver\NsidResolver;
 
 class Lexicon implements LexiconInterface
 {
@@ -15,6 +16,16 @@ class Lexicon implements LexiconInterface
         }
 
         $this->lexicon = $lexicon;
+    }
+
+    public static function fromNsid(Nsid $nsid): LexiconInterface
+    {
+        $path = NsidResolver::path($nsid);
+        $content = file_get_contents($path);
+
+        $toArray = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+
+        return new Lexicon($toArray);
     }
 
     public function nsid(): string

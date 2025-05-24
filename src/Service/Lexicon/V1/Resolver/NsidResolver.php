@@ -2,6 +2,10 @@
 
 namespace Blugen\Service\Lexicon\V1\Resolver;
 
+use Blugen\Config\ConfigManager;
+use Blugen\Container;
+use Blugen\Service\Lexicon\V1\Nsid;
+
 class NsidResolver
 {
     public static function namespace(string $nsid): string
@@ -16,6 +20,16 @@ class NsidResolver
         }
 
         return $namespace;
+    }
+
+    public static function path(Nsid $nsid): string
+    {
+        $id = $nsid->id();
+        $ds = DIRECTORY_SEPARATOR;
+        $basePath = rtrim(container()->get(ConfigManager::class)->get('lexicons.source'), $ds);
+        $path = str_replace(".", $ds, $id);
+
+        return $basePath . $ds . $path . ".json";
     }
 
     private static function parts(string $nsid): array
