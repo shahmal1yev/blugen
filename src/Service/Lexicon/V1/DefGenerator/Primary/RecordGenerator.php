@@ -6,6 +6,7 @@ use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Factory\ComponentGeneratorFactory;
 use Blugen\Service\Lexicon\V1\Resolver\NamespaceResolver;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\RecordTypeDefinition;
+use Nette\InvalidArgumentException;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
@@ -24,7 +25,15 @@ class RecordGenerator implements GeneratorInterface
 
         $this->file = new PhpFile();
         $this->namespace = $this->file->addNamespace($namespaceString);
-        $this->class = $this->namespace->addClass($className);
+        try {
+            $this->class = $this->namespace->addClass($className);
+        } catch (InvalidArgumentException $e) {
+            if (! str_contains($e->getMessage(), "is not valid class name.")) {
+                throw $e;
+            }
+
+            $this->class = $this->namespace->addClass("{$className}Definition");
+        }
         $this->file->setStrictTypes();
     }
 
