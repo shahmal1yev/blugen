@@ -31,8 +31,7 @@ class RefComponentGenerator implements GeneratorInterface
         $type = $this->phpType();
         $doc = $this->docType();
 
-        $this->class->getNamespace()
-            ?->addUse(trim($type, '?'));
+        $this->class->getNamespace()->addUse(trim($type, '?'));
 
         $this->class->addProperty($this->property->name())
             ->setPrivate()
