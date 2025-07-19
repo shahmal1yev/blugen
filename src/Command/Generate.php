@@ -22,7 +22,7 @@ class Generate extends Command
 {
     private ConfigManager $configManager;
 
-    public function __construct(ConfigManager $configManager = null)
+    public function __construct(?ConfigManager $configManager = null)
     {
         parent::__construct();
         $this->configManager = $configManager ?? container()->get(ConfigManager::class);
