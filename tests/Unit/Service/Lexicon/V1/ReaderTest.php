@@ -2,8 +2,9 @@
 
 namespace Blugen\Tests\Unit\Service\Lexicon\V1;
 
+use Blugen\Config\ConfigManager;
 use Blugen\Service\Lexicon\V1\Reader;
-use PHPUnit\Framework\TestCase;
+use Blugen\Tests\TestCase;
 use RuntimeException;
 
 class ReaderTest extends TestCase
@@ -75,6 +76,9 @@ class ReaderTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessageMatches('/No path provided/');
+
+        // Set lexicons.source to null using existing ConfigManager
+        container()->get(ConfigManager::class)->set('lexicons.source', null);
 
         $reader = new Reader();
         $reader->read(); // No path given

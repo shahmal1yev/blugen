@@ -17,7 +17,7 @@ class Reader implements ReaderInterface
         ?ConfigManager $config = null,
     ) {
         $this->config = $config ?? container()->get(ConfigManager::class);
-        $this->path = (string) ($path ?? $this->config->get('lexicons.source'));
+        $this->path = $path ?? $this->config->get('lexicons.source');
     }
 
     public function read(?string $path = null): static
