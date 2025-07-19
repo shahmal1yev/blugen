@@ -41,7 +41,7 @@ class DefinitionTest extends TestCase
         ],
     ];
 
-    private function lexicon(array $defs = null): LexiconInterface
+    private function lexicon(?array $defs = null): LexiconInterface
     {
         $defs ??= self::$defs;
 
