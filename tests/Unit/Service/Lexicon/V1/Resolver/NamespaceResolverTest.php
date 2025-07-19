@@ -2,11 +2,12 @@
 
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\Resolver;
 
+use Blugen\Config\ConfigManager;
 use Blugen\Enum\PrimaryTypeEnum;
 use Blugen\Service\Lexicon\V1\Resolver\NamespaceResolver;
 use Blugen\Service\Lexicon\LexiconInterface;
 use Blugen\Service\Lexicon\DefinitionInterface;
-use PHPUnit\Framework\TestCase;
+use Blugen\Tests\TestCase;
 
 class NamespaceResolverTest extends TestCase
 {
@@ -17,6 +18,9 @@ class NamespaceResolverTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Set empty base namespace for tests using existing ConfigManager
+        container()->get(ConfigManager::class)->set('output.base_namespace', '');
 
         $this->resolver = new NamespaceResolver();
         $this->lexiconMock = $this->createMock(LexiconInterface::class);
@@ -97,7 +101,7 @@ class NamespaceResolverTest extends TestCase
 
         $path = $this->resolver->path($this->lexiconMock, $this->definitionMock);
 
-        $this->assertSame('App/System/Config/SystemConfig', $path);
+        $this->assertSame('App/System/Config/SystemConfig.php', $path);
     }
 
     public function test_it_throws_exception_if_definition_does_not_exist(): void
