@@ -31,5 +31,11 @@
             "name": "Eldar Shahmaliyev",
             "email": "shahmal1yevv@proton.me"
         }
-    ]
+    ],
+    "scripts": {
+        "generate": [
+            "./bin/blugen generate",
+            "php -l generated"
+        ]
+    }
 }
