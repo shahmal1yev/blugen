@@ -6,6 +6,6 @@ return [
     ],
 
     'output' => [
-        'base_namespace' => "GeneratedLexicons\\",
+        'base_namespace' => "BlugenGenerator\\",
     ],
 ];
