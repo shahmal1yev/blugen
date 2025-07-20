@@ -6,6 +6,12 @@
 
 A powerful PHP library that generates code based on ATProto lexicons. Blugen reads lexicon JSON files and generates corresponding PHP classes with proper namespacing, type definitions, and structure following PSR standards.
 
+### 🚨 Under Development
+
+**This package is currently under active development.**
+
+For production use, please refer to [official releases](https://github.com/shahmal1yev/blugen/releases) only. The main branch may contain unstable features and breaking changes.
+
 ## Features
 
 - **🚀 Automated Code Generation**: Generate PHP classes from ATProto lexicon definitions
