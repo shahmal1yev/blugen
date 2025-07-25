@@ -3,7 +3,10 @@ name: Release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - '*.*.*'
+
+permissions:
+  contents: write
 
 jobs:
   release:
@@ -12,6 +15,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -22,27 +27,22 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
+      - name: Generate lexicon code
+        run: ./bin/blugen generate
+
       - name: Run tests
         run: |
           vendor/bin/phpunit
           vendor/bin/phpstan analyse
 
-      - name: Get version
-        id: version
-        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
       - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ steps.version.outputs.version }}
-          body: |
-            ## Installation
-            
-            ```bash
-            composer require shahmal1yev/blugen:^${{ steps.version.outputs.version }}
-            ```
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
           draft: false
           prerelease: false
+          generate_release_notes: true
+          files: |
+            Release.txt
+            LICENSE
