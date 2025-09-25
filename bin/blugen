@@ -1,17 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-use Composer\Autoload\ClassLoader;
-use Blugen\Config\ConfigManager;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use Symfony\Component\Config\FileLocator;
+require_once "vendor/autoload.php";
 
-$container = require __DIR__ . "/../bootstrap/container.php";
+use Blugen\App;
+use Blugen\Command\Clear;
+use Blugen\Command\Generate;
 
-// Create and run the application
-$app = new Application('blugen');
-$app->add(new \Blugen\Command\Generate());
+\Blugen\Container::get();
+
+$app = new App('blugen');
+$app->add(new Generate());
+$app->add(new Clear());
 $app->run();
