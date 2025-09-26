@@ -117,7 +117,7 @@ class ArrayComponentGenerator implements GeneratorInterface, ArraySerializationC
     public function toArrayField(): ArrayField
     {
         $key = $this->property->name();
-        $expression = "\$this->$key";
+        $expression = "\$this->$key ?? []";
 
         return new ArrayField($key, $expression);
     }
