@@ -68,20 +68,21 @@ class Client implements ClientInterface
         }
     }
 
-    /**
-     * @throws XrpcException
-     */
     private function validateCurrentSession(): array
     {
-        $validatedSession = $this->call(
+        $this->call(
             $nsid = nsid('com.atproto.server.getSession'),
             $this->createParameterClass($nsid, ClassNameSuffix::PARAMS)
-        )->toArray();
+        );
 
-        $this->sessionManager->updateFromResponse($validatedSession);
-        $this->httpClient = HttpClientFactory::withAuthToken($this->httpClient, $validatedSession['accessJwt']);
+        $session = $this->sessionManager->getSession();
 
-        return $this->sessionManager->getSession();
+        $this->httpClient = HttpClientFactory::withAuthToken(
+            $this->httpClient,
+            $session['accessJwt']
+        );
+
+        return $session;
     }
 
     /**

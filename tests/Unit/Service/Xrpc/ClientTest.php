@@ -135,10 +135,6 @@ class ClientTest extends TestCase
     {
         $handle = 'test.user';
         $password = 'password123';
-        $existingSession = [
-            'accessJwt' => 'existing-access',
-            'refreshJwt' => 'existing-refresh'
-        ];
 
         $validatedSession = [
             'accessJwt' => 'validated-access',
@@ -147,7 +143,6 @@ class ClientTest extends TestCase
         ];
 
         $response = $this->createMock(ResponseInterface::class);
-        $response->expects($this->once())->method('toArray')->willReturn($validatedSession);
 
         $this->mockCallable->expects($this->any())->method('method')->willReturn('GET');
         $this->mockCallable->expects($this->any())->method('path')->willReturn('com.atproto.server.getSession');
@@ -156,7 +151,7 @@ class ClientTest extends TestCase
         $this->httpClient->expects($this->once())->method('request')->willReturn($response);
         $this->httpClient->expects($this->atLeastOnce())->method('withOptions')->willReturn($this->httpClient);
 
-        $result = $this->client->login($handle, $password, $existingSession);
+        $result = $this->client->login($handle, $password, $validatedSession);
 
         $this->assertEquals($validatedSession, $result);
     }
