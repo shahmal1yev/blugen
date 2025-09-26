@@ -3,17 +3,23 @@
 namespace Blugen\Service\Lexicon\V1\DefGenerator\Primary;
 
 use Blugen\Enum\ClassNameSuffix;
+use Blugen\Service\Lexicon\ArraySerialization\ArraySerializable;
+use Blugen\Service\Lexicon\ArraySerialization\ArraySerializationContext;
+use Blugen\Service\Lexicon\ArraySerialization\BuildsArraySerialization;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Factory\ComponentGeneratorFactory;
 use Blugen\Service\Lexicon\V1\Resolver\NamespaceResolver;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\RecordTypeDefinition;
+use JsonSerializable;
 use Nette\InvalidArgumentException;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 
-class RecordGenerator implements GeneratorInterface
+class RecordGenerator implements GeneratorInterface, ArraySerializationContext
 {
+    use BuildsArraySerialization;
+
     private readonly PhpFile $file;
     private readonly PhpNamespace $namespace;
     private readonly ClassType $class;
@@ -40,9 +46,20 @@ class RecordGenerator implements GeneratorInterface
 
     public function generate(): string
     {
-        foreach ($this->definition->record()->properties() as $name => $property) {
-            ComponentGeneratorFactory::create($this->class, $property, $this->definition->lexicon())->generate();
+        $this->class->addImplement(ArraySerializable::class)
+            ->addImplement(JsonSerializable::class);
+
+        foreach ($this->definition->record()->properties() as $property) {
+            ComponentGeneratorFactory::create($this->class, $property, $this->definition->lexicon(), $this)->generate();
         }
+
+        $this->class->addMethod('toArray')
+            ->setReturnType('array')
+            ->setBody($this->generateBody());
+
+        $this->class->addMethod('jsonSerialize')
+            ->setReturnType('array')
+            ->setBody('return $this->toArray();');
 
         return $this->file->__toString();
     }

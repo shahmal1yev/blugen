@@ -2,6 +2,8 @@
 
 namespace Blugen\Service\Lexicon\V1\ComponentGenerator\Field;
 
+use Blugen\Service\Lexicon\ArraySerialization\ArrayField;
+use Blugen\Service\Lexicon\ArraySerialization\ArraySerializationContributor;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Factory\ComponentGeneratorFactory;
 use Blugen\Service\Lexicon\V1\Property;
@@ -16,7 +18,7 @@ class ParamsComponentGenerator implements GeneratorInterface
 
     public function __construct(
         private readonly ClassType $class,
-        private readonly Property $property
+        private readonly Property $property,
     ) {
         $this->schema = new ParamsSchema($this->property->schema());
         $this->anonClass = new ClassType(null);

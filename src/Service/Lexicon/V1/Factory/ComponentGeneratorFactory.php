@@ -23,25 +23,25 @@ use Blugen\Service\Lexicon\V1\ComponentGenerator\Field\TokenComponentGenerator;
 
 class ComponentGeneratorFactory
 {
-    public static function create(ClassType $class, Property $property, ?LexiconInterface $lexicon = null): GeneratorInterface
+    public static function create(ClassType $class, Property $property, ?LexiconInterface $lexicon = null, ?GeneratorInterface $context = null): GeneratorInterface
     {
         $type = $property->schema()->type();
 
         return match($type) {
-            'string' => new StringComponentGenerator($class, $property),
-            'object' => new ObjectComponentGenerator($class, $property),
-            'integer' => new IntegerComponentGenerator($class, $property),
-            'boolean' => new BooleanComponentGenerator($class, $property),
-            'array' => new ArrayComponentGenerator($class, $property),
-            'bytes' => new BytesComponentGenerator($class, $property),
+            'string' => new StringComponentGenerator($class, $property, $context),
+            'object' => new ObjectComponentGenerator($class, $property, $context),
+            'integer' => new IntegerComponentGenerator($class, $property, $context),
+            'boolean' => new BooleanComponentGenerator($class, $property, $context),
+            'array' => new ArrayComponentGenerator($class, $property, $context),
+            'bytes' => new BytesComponentGenerator($class, $property, $context),
             'params' => new ParamsComponentGenerator($class, $property),
             'null' => new NullComponentGenerator($class, $property),
-            'cid-link' => new CidLinkComponentGenerator($class, $property),
-            'blob' => new BlobComponentGenerator($class, $property),
+            'cid-link' => new CidLinkComponentGenerator($class, $property, $context),
+            'blob' => new BlobComponentGenerator($class, $property, $context),
             'token' => new TokenComponentGenerator($class, $property),
-            'ref' => new RefComponentGenerator($class, $property, $lexicon),
-            'union' => new UnionComponentGenerator($class, $property),
-            'unknown' => new UnknownComponentGenerator($class, $property),
+            'ref' => new RefComponentGenerator($class, $property, $lexicon, $context),
+            'union' => new UnionComponentGenerator($class, $property, $context),
+            'unknown' => new UnknownComponentGenerator($class, $property, $context),
             default => throw new \RuntimeException("Unsupported type: $type"),
         };
     }
