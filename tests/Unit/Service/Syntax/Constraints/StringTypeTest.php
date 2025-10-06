@@ -2,8 +2,8 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Constraints;
 
-use Blugen\Service\Syntax\StringType\StringType;
-use Blugen\Service\Syntax\StringType\StringTypeValidator;
+use Blugen\Service\Syntax\Constraints\StringType\StringType;
+use Blugen\Service\Syntax\Constraints\StringType\StringTypeValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

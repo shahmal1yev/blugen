@@ -2,8 +2,8 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Constraints\Format;
 
-use Blugen\Service\Syntax\StringType\Format\Handle\Handle;
-use Blugen\Service\Syntax\StringType\Format\Handle\HandleValidator;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Handle\Handle;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Handle\HandleValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

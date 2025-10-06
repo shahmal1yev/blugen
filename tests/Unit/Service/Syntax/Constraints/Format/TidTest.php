@@ -2,8 +2,8 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Constraints\Format;
 
-use Blugen\Service\Syntax\StringType\Format\Tid\Tid;
-use Blugen\Service\Syntax\StringType\Format\Tid\TidValidator;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Tid\Tid;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Tid\TidValidator;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class TidTest extends ConstraintValidatorTestCase

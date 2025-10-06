@@ -2,8 +2,8 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Constraints\Format;
 
-use Blugen\Service\Syntax\StringType\Format\Datetime\Datetime;
-use Blugen\Service\Syntax\StringType\Format\Datetime\DatetimeValidator;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Datetime\Datetime;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Datetime\DatetimeValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 

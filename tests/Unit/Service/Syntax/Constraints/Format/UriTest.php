@@ -2,8 +2,8 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Constraints\Format;
 
-use Blugen\Service\Syntax\StringType\Format\Uri\Uri;
-use Blugen\Service\Syntax\StringType\Format\Uri\UriValidator;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Uri\Uri;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Uri\UriValidator;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

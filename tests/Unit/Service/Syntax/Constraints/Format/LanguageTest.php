@@ -2,8 +2,8 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Constraints\Format;
 
-use Blugen\Service\Syntax\StringType\Format\Language\Language;
-use Blugen\Service\Syntax\StringType\Format\Language\LanguageValidator;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Language\Language;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Language\LanguageValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 

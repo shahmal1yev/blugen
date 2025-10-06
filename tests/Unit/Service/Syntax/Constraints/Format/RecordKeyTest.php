@@ -2,8 +2,8 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Constraints\Format;
 
-use Blugen\Service\Syntax\StringType\Format\RecordKey\RecordKey;
-use Blugen\Service\Syntax\StringType\Format\RecordKey\RecordKeyValidator;
+use Blugen\Service\Syntax\Constraints\StringType\Format\RecordKey\RecordKey;
+use Blugen\Service\Syntax\Constraints\StringType\Format\RecordKey\RecordKeyValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 

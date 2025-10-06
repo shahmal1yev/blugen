@@ -2,8 +2,8 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Constraints\Format;
 
-use Blugen\Service\Syntax\StringType\Format\Nsid\Nsid;
-use Blugen\Service\Syntax\StringType\Format\Nsid\NsidValidator;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Nsid\Nsid;
+use Blugen\Service\Syntax\Constraints\StringType\Format\Nsid\NsidValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 

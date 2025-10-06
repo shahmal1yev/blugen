@@ -2,8 +2,8 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Constraints\Format;
 
-use Blugen\Service\Syntax\StringType\Format\AtUri\AtUri;
-use Blugen\Service\Syntax\StringType\Format\AtUri\AtUriValidator;
+use Blugen\Service\Syntax\Constraints\StringType\Format\AtUri\AtUri;
+use Blugen\Service\Syntax\Constraints\StringType\Format\AtUri\AtUriValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
