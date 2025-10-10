@@ -5,9 +5,14 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support;
 use ArrayIterator;
 use Blugen\Enum\SupportTypeEnum;
 use Blugen\Service\Lexicon\SchemaInterface;
+use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
+use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
 
 class ErrorsSchema implements SchemaInterface, \IteratorAggregate, \Countable
 {
+    use ArrayableTrait;
+    use SchemaTrait;
+
     private array $errors;
 
     public function __construct(
@@ -49,5 +54,10 @@ class ErrorsSchema implements SchemaInterface, \IteratorAggregate, \Countable
     public function count(): int
     {
         return count($this->errors);
+    }
+
+    public function schema(): array
+    {
+        return $this->errors;
     }
 }

@@ -5,10 +5,15 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support;
 use Blugen\Enum\SupportTypeEnum;
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
+use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\UnionSchema;
 
 class MessageSchema implements SchemaInterface
 {
+    use ArrayableTrait;
+    use SchemaTrait;
+
     public function __construct(private readonly SchemaInterface $schema)
     {
     }
@@ -28,10 +33,9 @@ class MessageSchema implements SchemaInterface
         return $this->schema->__get($name);
     }
 
-    public function schema(): UnionSchema
+    public function schema(): array
     {
         /** @var array $schema */
-        $schema = $this->__get('schema');
-        return new UnionSchema(new Schema($schema));
+        return $this->__get('schema');
     }
 }

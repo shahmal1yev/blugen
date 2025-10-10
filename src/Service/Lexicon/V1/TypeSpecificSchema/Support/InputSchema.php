@@ -5,12 +5,17 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support;
 use Blugen\Enum\SupportTypeEnum;
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
+use Blugen\Service\Lexicon\V1\Traits\SchemaTrait as SchemaTrait;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ObjectSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\RefSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\UnionSchema;
 
 class InputSchema implements SchemaInterface
 {
+    use ArrayableTrait;
+    use SchemaTrait;
+
     public function __construct(private SchemaInterface $schema)
     {
     }
@@ -35,22 +40,8 @@ class InputSchema implements SchemaInterface
         return $this->__get('encoding');
     }
 
-    public function schema(): ObjectSchema|RefSchema|UnionSchema|null
+    public function schema(): array
     {
-        $schema = $this->__get('schema');
-
-        if ($schema) {
-            $schema = new Schema($schema);
-        } else {
-            return new ObjectSchema(new Schema([]));
-        }
-
-        $class = match ($schema->type()) {
-            'object' => ObjectSchema::class,
-            'union' => UnionSchema::class,
-            'ref' => RefSchema::class,
-        };
-
-        return new $class($schema);
+        return $this->__get('schema') ?? [];
     }
 }
