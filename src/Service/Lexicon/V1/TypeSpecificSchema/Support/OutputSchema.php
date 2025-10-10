@@ -41,6 +41,6 @@ class OutputSchema implements SchemaInterface
 
     public function schema(): array
     {
-        return $this->__get('schema');
+        return $this->__get('schema') ?? [];
     }
 }
