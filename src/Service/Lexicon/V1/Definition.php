@@ -64,4 +64,15 @@ class Definition implements DefinitionInterface
 
         return $def;
     }
+
+    public function toArray(): array
+    {
+        return array_filter($this->schema(), static fn ($value) => $value !== null);
+    }
+
+    public function schema(): array
+    {
+        $defs = $this->lexicon->defs();
+        return $defs[$this->name] ?? [];
+    }
 }
