@@ -6,11 +6,16 @@ use Blugen\Service\Lexicon\DefinitionInterface;
 use Blugen\Service\Lexicon\LexiconInterface;
 use Blugen\Service\Lexicon\V1\Definition;
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Field\ObjectTypeDefinition;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ObjectSchema;
+use Blugen\Service\Lexicon\V1\Traits\DefinitionTrait as DefinitionTrait;
 
 class RecordTypeDefinition implements DefinitionInterface
 {
+    use ArrayableTrait;
+    use DefinitionTrait;
+
     public function __construct(
         private readonly DefinitionInterface $definition
     )
