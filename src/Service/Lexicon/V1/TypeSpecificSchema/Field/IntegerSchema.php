@@ -3,9 +3,14 @@
 namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
+use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
+use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
 
 class IntegerSchema implements SchemaInterface
 {
+    use ArrayableTrait;
+    use SchemaTrait;
+
     public function __construct(private readonly SchemaInterface $schema)
     {}
 

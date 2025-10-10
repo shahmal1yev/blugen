@@ -5,9 +5,14 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
+use Blugen\Service\Lexicon\V1\Traits\SchemaTrait as SchemaTrait;
 
 class ObjectSchema implements SchemaInterface
 {
+    use ArrayableTrait;
+    use SchemaTrait;
+
     public function __construct(private readonly SchemaInterface $schema)
     {
     }
