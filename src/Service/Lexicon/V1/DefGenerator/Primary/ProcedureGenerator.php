@@ -14,6 +14,7 @@ use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\ProcedureTypeDefini
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ObjectSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\RefSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\UnionSchema;
+use Blugen\Service\Syntax\Factory\SchemaFactory;
 use Blugen\Service\Xrpc\CallableInterface;
 use Blugen\Service\Xrpc\Encoder\Encoder;
 use Nette\PhpGenerator\ClassType;
@@ -47,7 +48,12 @@ class ProcedureGenerator implements GeneratorInterface
 
         $this->class->addImplement(ProcedureInterface::class);
 
-        $schema = $this->definition->input()?->schema();
+        $schemaArr = $this->definition->input()?->schema();
+        $schema = null;
+
+        if (! empty($schemaArr)) {
+            $schema = container()->get(SchemaFactory::class)::create($schemaArr['type'], $schemaArr);
+        }
 
         if ($schema instanceof UnionSchema) {
             $refs = array_map(function (string $ref) {
