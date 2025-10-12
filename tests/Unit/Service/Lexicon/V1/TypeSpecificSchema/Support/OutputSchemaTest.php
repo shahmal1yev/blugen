@@ -3,58 +3,57 @@
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Support;
 
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\InputSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\OutputSchema;
 use Blugen\Tests\TestCase;
+use Blugen\Tests\Unit\Traits\WithArrayableTest;
+use Blugen\Tests\Unit\Traits\WithGetTest;
+use Blugen\Tests\Unit\Traits\WithSchema;
+use Blugen\Tests\Unit\Traits\WithSupportSchemaTest;
 use TypeError;
 
 class OutputSchemaTest extends TestCase
 {
-    public function test_type_returns_expected_value(): void
+    use WithSchema;
+    use WithGetTest;
+    use WithArrayableTest;
+    use WithSupportSchemaTest;
+
+    public function test_description_throws_exception(): void
     {
-        $schema = new OutputSchema(new Schema([]));
-
-        $expected = 'output';
-        $actual = $schema->type();
-
-        $this->assertSame($expected, $actual);
+        // Placeholder: OutputSchema has own description field
+        $this->assertTrue(true);
     }
 
     public function test_description_returns_expected_value(): void
     {
-        $schema = new OutputSchema(new Schema([
-            'description' => 'An example description.',
-        ]));
+        $schema = $this->schema(['description' => 'description of the output schema']);
 
-        $expected = 'An example description.';
-        $actual = $schema->description();
-
-        $this->assertSame($expected, $actual);
+        $this->assertSame('description of the output schema', $schema->description());
     }
 
     public function test_description_is_optional(): void
     {
-        $schema = new OutputSchema(new Schema([
+        $schema = $this->schema([
             // missing description
-        ]));
+        ]);
 
         $this->assertNull($schema->description());
     }
 
     public function test_encoding_returns_expected_value(): void
     {
-        $schema = new OutputSchema(new Schema([
+        $schema = $this->schema([
             'encoding' => 'application/json',
-        ]));
+        ]);
 
         $this->assertSame('application/json', $schema->encoding());
     }
 
     public function test_encoding_is_required(): void
     {
-        $schema = new OutputSchema(new Schema([
+        $schema = $this->schema([
             // missing encoding
-        ]));
+        ]);
 
         $this->expectException(TypeError::class);
 
@@ -64,40 +63,20 @@ class OutputSchemaTest extends TestCase
     public function test_schema_returns_expected_value(): void
     {
         $schema = ['type' => 'ref', 'ref' => 'com.example.schema'];
-        $OutputSchema = new OutputSchema(new Schema(['schema' => $schema]));
+        $outputSchema = $this->schema(['schema' => $schema]);
 
-        $this->assertSame($schema, $OutputSchema->schema());
+        $this->assertSame($schema, $outputSchema->schema());
     }
 
     public function test_schema_is_required(): void
     {
-        $schema = new OutputSchema(new Schema([
+        $schema = $this->schema([
             // missing schema
-        ]));
+        ]);
 
         $this->expectException(TypeError::class);
 
         $schema->schema();
-    }
-
-    public function test_toArray_works_properly(): void
-    {
-        $expected = [
-            'description' => 'An example description.',
-            'encoding' => 'application/json',
-            'schema' => [
-                'type' => 'union',
-                'refs' => [
-                    'com.example.schema',
-                    'com.test.another.schema',
-                    'tools.example.schema',
-                ]
-            ]
-        ];
-
-        $schema = new OutputSchema(new Schema($expected));
-
-        $this->assertSame($expected, $schema->toArray());
     }
 
     public function test_parameters_returns_expected_value(): void
@@ -120,19 +99,37 @@ class OutputSchemaTest extends TestCase
             ],
         ];
 
-        $schema = new InputSchema(new Schema([
+        $schema = $this->schema([
             'parameters' => $params,
-        ]));
+        ]);
 
         $this->assertSame($params, $schema->parameters());
     }
 
     public function test_parameters_is_optional(): void
     {
-        $schema = new InputSchema(new Schema([
+        $schema = $this->schema([
             // missing parameters
-        ]));
+        ]);
 
         $this->assertNull($schema->parameters());
+    }
+
+    private function schema(array $content): OutputSchema
+    {
+        return new OutputSchema(new Schema($content));
+    }
+
+    public function test_toArray_delegates_to_schema_instance(): void
+    {
+        $expected = [
+            'encoding' => 'application/json',
+            'schema' => ['type' => 'ref', 'ref' => 'com.example'],
+            'parameters' => ['foo' => 'bar'],
+        ];
+
+        $schema = $this->schema($expected);
+
+        $this->assertSame($expected, $schema->toArray());
     }
 }
