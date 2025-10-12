@@ -6,24 +6,16 @@ use Blugen\Enum\SupportTypeEnum;
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\SupportSchemaTrait;
 
 class MessageSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use SchemaTrait;
+    use SupportSchemaTrait;
 
     public function __construct(private readonly SchemaInterface $schema)
     {
-    }
-
-    public function type(): string
-    {
-        return SupportTypeEnum::MESSAGE->value;
-    }
-
-    public function description(): ?string
-    {
-        return $this->schema->description() ?? null;
     }
 
     public function __get(string $name): mixed

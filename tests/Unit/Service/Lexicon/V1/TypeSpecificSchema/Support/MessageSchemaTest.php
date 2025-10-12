@@ -3,61 +3,34 @@
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Support;
 
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\MessageSchema;
 use Blugen\Tests\TestCase;
+use Blugen\Tests\Unit\Traits\WithGetTest;
+use Blugen\Tests\Unit\Traits\WithSchema;
+use Blugen\Tests\Unit\Traits\WithSupportSchemaTest;
 use TypeError;
 
 class MessageSchemaTest extends TestCase
 {
-    public function test_type_returns_expected_value(): void
-    {
-        $schema = new MessageSchema(new Schema([
-
-        ]));
-
-        $this->assertSame('message', $schema->type());
-    }
-
-    public function test_type_is_static(): void
-    {
-        $schema = new MessageSchema(new Schema([
-            'type' => 'blah blah'
-        ]));
-
-        $this->assertSame('message', $schema->type());
-    }
-
-    public function test_description_returns_expected_value(): void
-    {
-        $schema = new MessageSchema(new Schema([
-            'description' => 'foo bar baz'
-        ]));
-
-        $this->assertSame('foo bar baz', $schema->description());
-    }
-
-    public function test_description_is_optional(): void
-    {
-        $schema = new MessageSchema(new Schema([
-            // missing desc
-        ]));
-
-        $this->assertNull($schema->description());
-    }
+    use WithSchema;
+    use WithGetTest;
+    use ArrayableTrait;
+    use WithSupportSchemaTest;
 
     public function test_schema_returns_expected_value(): void
     {
         $schema = ['foo' => 'bar', 'baz' => 'qux'];
-        $messageSchema = new MessageSchema(new Schema(['schema' => $schema]));
+        $messageSchema = $this->schema(['schema' => $schema]);
 
         $this->assertSame($schema, $messageSchema->schema());
     }
 
     public function test_schema_is_required(): void
     {
-        $messageSchema = new MessageSchema(new Schema([
+        $messageSchema = $this->schema([
             // missing schema
-        ]));
+        ]);
 
         $this->expectException(TypeError::class);
 
@@ -74,8 +47,13 @@ class MessageSchemaTest extends TestCase
             ]
         ];
 
-        $messageSchema = new MessageSchema(new Schema($schema));
+        $messageSchema = $this->schema($schema);
 
         $this->assertSame($schema, $messageSchema->toArray());
+    }
+
+    private function schema(array $content): MessageSchema
+    {
+        return new MessageSchema(new Schema($content));
     }
 }
