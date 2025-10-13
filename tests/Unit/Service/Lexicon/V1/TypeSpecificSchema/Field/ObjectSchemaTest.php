@@ -2,115 +2,100 @@
 
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
-use Blugen\Service\Lexicon\V1\Property;
+use Blugen\Service\Lexicon\V1\Exceptions\MissingRequiredFieldException;
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\StringSchema;
 use Blugen\Service\Lexicon\V1\Schema\Container\ObjectSchema;
+use Blugen\Tests\Unit\Traits\WithArrayableTestTrait;
+use Blugen\Tests\Unit\Traits\WithGetTestTrait;
+use Blugen\Tests\Unit\Traits\WithSchema;
+use Blugen\Tests\Unit\Traits\WithSchemaTestTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ObjectSchemaTest extends TestCase
 {
-    private function make(array $schema): ObjectSchema
+    use WithSchema;
+    use WithGetTestTrait;
+    use WithSchemaTestTrait;
+    use WithArrayableTestTrait;
+
+    #[DataProvider('propertyCaseProvider')]
+    public function test_properties_returns_expected_value(array $properties, string $expected): void
     {
-        return new ObjectSchema(new Schema($schema));
+        $schema = $this->schema([
+            'type' => 'object',
+            'properties' => $properties
+        ]);
+
+        foreach ($schema->properties() as $property) {
+            $this->assertInstanceOf($expected, $property);
+        }
     }
 
-    public function test_type_description_and_to_array_filters_only_nulls(): void
+    public static function propertyCaseProvider(): \Generator
     {
-        $schema = [
-            'type' => 'object',
-            'description' => 'User profile',
-            'properties' => [
-                'name' => ['type' => 'string'],
-            ],
-            'required' => ['name'],
-            'nullable' => null,
-            'extra' => null,
+        yield 'string property' => [
+            'properties' => ['field1' => ['type' => 'string', 'format' => 'did']],
+            'expected' => StringSchema::class,
         ];
-
-        $object = $this->make($schema);
-
-        $this->assertSame('object', $object->type());
-        $this->assertSame('User profile', $object->description());
-
-        $this->assertSame([
-            'type' => 'object',
-            'description' => 'User profile',
-            'properties' => [
-                'name' => ['type' => 'string'],
-            ],
-            'required' => ['name'],
-        ], $object->toArray());
     }
 
-    public function test_properties_maps_to_property_objects_with_flags(): void
+    public function test_properties_is_required(): void
     {
-        $schema = [
+        $schema = $this->schema([
             'type' => 'object',
-            'properties' => [
-                'name' => ['type' => 'string', 'description' => 'The name'],
-                'age' => ['type' => 'integer'],
-            ],
-            'required' => ['name'],
-            'nullable' => ['age'],
-        ];
+            // missing properties
+        ]);
 
-        $object = $this->make($schema);
-        $props = $object->properties();
+        $this->expectException(MissingRequiredFieldException::class);
+        $this->expectExceptionMessage("array property 'properties'");
 
-        $this->assertCount(2, $props);
-        $this->assertContainsOnlyInstancesOf(Property::class, $props);
-
-        // Preserve order from input (name, age)
-        $nameProp = $props[0];
-        $ageProp = $props[1];
-
-        $this->assertSame('name', $nameProp->name());
-        $this->assertSame(['type' => 'string', 'description' => 'The name'], $nameProp->schema()->toArray());
-        $this->assertFalse($nameProp->isNullable());
-        $this->assertTrue($nameProp->isRequired());
-
-        $this->assertSame('age', $ageProp->name());
-        $this->assertSame(['type' => 'integer'], $ageProp->schema()->toArray());
-        $this->assertTrue($ageProp->isNullable());
-        $this->assertFalse($ageProp->isRequired());
+        $schema->properties();
     }
 
-    public function test_required_nullable_accessors_and_schema_return(): void
+    public function test_nullable_returns_expected_value(): void
     {
-        $schema = [
+        $schema = $this->schema([
             'type' => 'object',
-            'properties' => [],
-            'required' => ['x'],
-            'nullable' => ['y'],
-        ];
+            'nullable' => ['field1', 'field2'],
+        ]);
 
-        $object = $this->make($schema);
-        $this->assertSame(['x'], $object->required());
-        $this->assertSame(['y'], $object->nullable());
-        $this->assertSame($schema, $object->schema());
+        $this->assertSame(['field1', 'field2'], $schema->nullable());
     }
 
-    public function test_required_nullable_null_when_absent(): void
+    public function test_nullable_is_optional(): void
     {
-        $schema = [
+        $schema = $this->schema([
             'type' => 'object',
-            'properties' => [],
-        ];
+            // missing nullable
+        ]);
 
-        $object = $this->make($schema);
-        $this->assertNull($object->required());
-        $this->assertNull($object->nullable());
+        $this->assertNull($schema->nullable());
     }
 
-    public function test_magic_get_dotted_paths(): void
+    public function test_required_returns_expected_value(): void
     {
-        $schema = [
+        $schema = $this->schema([
             'type' => 'object',
-            'meta' => ['info' => ['title' => 'Example']],
-        ];
+            'required' => ['field1', 'field2'],
+        ]);
 
-        $object = $this->make($schema);
-        $this->assertSame('Example', $object->__get('meta.info.title'));
-        $this->assertNull($object->__get('meta.info.missing'));
+        $this->assertSame(['field1', 'field2'], $schema->required());
+    }
+
+    public function test_required_is_optional(): void
+    {
+        $schema = $this->schema([
+            'type' => 'object',
+            // missing required
+        ]);
+
+        $this->assertNull($schema->required());
+    }
+
+    private function schema(array $content): ObjectSchema
+    {
+        return new ObjectSchema(new Schema($content));
     }
 }
