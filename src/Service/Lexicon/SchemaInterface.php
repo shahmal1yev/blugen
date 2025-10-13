@@ -7,4 +7,5 @@ interface SchemaInterface
     public function type(): string;
     public function description(): ?string;
     public function __get(string $name): mixed;
+    public function toArray(): array;
 }
