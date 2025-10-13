@@ -3,47 +3,38 @@
 namespace Blugen\Service\Lexicon\V1\Schema\Container;
 
 use Blugen\Service\Lexicon\SchemaInterface;
+use Blugen\Service\Lexicon\V1\Exceptions\MissingRequiredFieldException;
 use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
+use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
+use Blugen\Service\Syntax\Factory\SchemaFactory;
 
 class ObjectSchema implements SchemaInterface
 {
+    use SchemaTrait;
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
 
-    public function __construct(private readonly SchemaInterface $schema)
+    public function __construct(private readonly SchemaInterface $schema, private ?SchemaFactory $factory = null)
     {
+        $this->factory ??= container()->get(SchemaFactory::class);
     }
 
-    public function type(): string
-    {
-        return $this->schema->type();
-    }
-
-    public function description(): ?string
-    {
-        return $this->schema->description() ?? null;
-    }
-
-    public function __get(string $name): mixed
-    {
-        return $this->schema->__get($name);
-    }
-
+    /**
+     * @throws MissingRequiredFieldException
+     */
     public function properties(): array
     {
-        $nullable = $this->nullable() ?? [];
-        $required = $this->required() ?? [];
-        $properties = $this->__get('properties') ?? [];
+        if (! is_array($properties = $this->__get('properties'))) {
+            throw new MissingRequiredFieldException("Missing the required array property 'properties'");
+        }
 
-        return array_map(fn (string $name, array $rawSchema) => new Property(
-            $name,
-            new Schema($rawSchema),
-            in_array($name, $nullable, true),
-            in_array($name, $required, true),
-        ), array_keys($properties), $properties);
+        return array_map(
+            fn (array $schemaContent) => $this->factory::create($schemaContent['type'], $schemaContent),
+            $properties
+        );
     }
 
     public function required(): ?array
