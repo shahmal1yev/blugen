@@ -1,12 +1,12 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\Schema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Concrete;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
-class BooleanSchema implements SchemaInterface
+class IntegerSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
@@ -29,12 +29,27 @@ class BooleanSchema implements SchemaInterface
         return $this->schema->description() ?? null;
     }
 
-    public function default(): ?bool
+    public function minimum(): ?int
+    {
+        return $this->__get('minimum');
+    }
+
+    public function maximum(): ?int
+    {
+        return $this->__get('maximum');
+    }
+
+    public function enum(): ?array
+    {
+        return $this->__get('enum');
+    }
+
+    public function default(): ?int
     {
         return $this->__get('default');
     }
 
-    public function const(): ?bool
+    public function const(): ?int
     {
         return $this->__get('const');
     }

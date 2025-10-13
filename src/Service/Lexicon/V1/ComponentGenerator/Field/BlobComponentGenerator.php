@@ -7,7 +7,7 @@ use Blugen\Service\Lexicon\ArraySerialization\ArraySerializationContext;
 use Blugen\Service\Lexicon\ArraySerialization\ArraySerializationContributor;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Property;
-use Blugen\Service\Lexicon\V1\Schema\Field\BlobSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\BlobSchema;
 use Nette\PhpGenerator\ClassType;
 
 class BlobComponentGenerator implements GeneratorInterface, ArraySerializationContributor

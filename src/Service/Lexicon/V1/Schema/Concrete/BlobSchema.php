@@ -1,6 +1,6 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\Schema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Concrete;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;

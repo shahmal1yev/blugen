@@ -3,7 +3,7 @@
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\Schema\Field\BlobSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\BlobSchema;
 use PHPUnit\Framework\TestCase;
 
 class BlobSchemaTest extends TestCase

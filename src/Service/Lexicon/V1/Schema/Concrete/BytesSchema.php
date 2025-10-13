@@ -1,23 +1,25 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\Schema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Concrete;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
-class NullSchema implements SchemaInterface
+class BytesSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
 
     public function __construct(
-        private readonly SchemaInterface $schema
-    ) {}
+        private readonly SchemaInterface $schema,
+    )
+    {
+    }
 
     public function type(): string
     {
-        return 'null';
+        return $this->schema->type();
     }
 
     public function description(): ?string
@@ -28,5 +30,15 @@ class NullSchema implements SchemaInterface
     public function __get(string $name): mixed
     {
         return $this->schema->__get($name);
+    }
+
+    public function minLength(): ?int
+    {
+        return $this->__get('minLength');
+    }
+
+    public function maxLength(): ?int
+    {
+        return $this->__get('maxLength');
     }
 }

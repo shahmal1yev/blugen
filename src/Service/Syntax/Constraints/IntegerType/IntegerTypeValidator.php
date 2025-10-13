@@ -3,7 +3,7 @@
 namespace Blugen\Service\Syntax\Constraints\IntegerType;
 
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\Schema\Field\IntegerSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\IntegerSchema;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;

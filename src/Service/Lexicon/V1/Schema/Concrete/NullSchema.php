@@ -1,12 +1,12 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\Schema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Concrete;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
-class CidLinkSchema implements SchemaInterface
+class NullSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
@@ -17,7 +17,7 @@ class CidLinkSchema implements SchemaInterface
 
     public function type(): string
     {
-        return 'cid-link';
+        return 'null';
     }
 
     public function description(): ?string

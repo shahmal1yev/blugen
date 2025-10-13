@@ -3,7 +3,7 @@
 namespace Blugen\Service\Syntax\Constraints\StringType;
 
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\Schema\Field\StringSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\StringSchema;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;

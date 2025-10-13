@@ -3,7 +3,7 @@
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\Schema\Field\StringSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\StringSchema;
 use PHPUnit\Framework\TestCase;
 
 class StringSchemaTest extends TestCase
