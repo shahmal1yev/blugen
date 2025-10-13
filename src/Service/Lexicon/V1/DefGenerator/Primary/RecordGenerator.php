@@ -7,8 +7,11 @@ use Blugen\Service\Lexicon\ArraySerialization\ArraySerializable;
 use Blugen\Service\Lexicon\ArraySerialization\ArraySerializationContext;
 use Blugen\Service\Lexicon\ArraySerialization\BuildsArraySerialization;
 use Blugen\Service\Lexicon\GeneratorInterface;
+use Blugen\Service\Lexicon\V1\Exceptions\MissingRequiredFieldException;
 use Blugen\Service\Lexicon\V1\Factory\ComponentGeneratorFactory;
+use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Resolver\NamespaceResolver;
+use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\RecordTypeDefinition;
 use JsonSerializable;
 use Nette\InvalidArgumentException;
@@ -49,7 +52,22 @@ class RecordGenerator implements GeneratorInterface, ArraySerializationContext
         $this->class->addImplement(ArraySerializable::class)
             ->addImplement(JsonSerializable::class);
 
-        foreach ($this->definition->record()->properties() as $property) {
+        try {
+            $properties = $this->definition->record()->properties();
+        } catch (MissingRequiredFieldException) {
+            $properties = [];
+        }
+
+        $nullable = $this->definition->record()->nullable() ?? [];
+        $required = $this->definition->record()->required() ?? [];
+
+        foreach ($properties as $propertyName => $property) {
+            $property = new Property(
+                $propertyName,
+                new Schema($property->toArray()),
+                in_array($propertyName, $nullable, true),
+                in_array($propertyName, $required, true)
+            );
             ComponentGeneratorFactory::create($this->class, $property, $this->definition->lexicon(), $this)->generate();
         }
 

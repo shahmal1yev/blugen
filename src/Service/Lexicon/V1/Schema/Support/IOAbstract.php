@@ -32,7 +32,7 @@ abstract class IOAbstract
         return $this->__get('encoding');
     }
 
-    public function schema(): array
+    public function schema(): ?array
     {
         return $this->__get('schema');
     }

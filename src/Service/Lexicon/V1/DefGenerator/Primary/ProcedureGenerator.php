@@ -6,9 +6,12 @@ use Blugen\Enum\ClassNameSuffix;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\InputInterface;
 use Blugen\Service\Lexicon\ProcedureInterface;
+use Blugen\Service\Lexicon\V1\Exceptions\MissingRequiredFieldException;
 use Blugen\Service\Lexicon\V1\Factory\ComponentGeneratorFactory;
+use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Resolver\NamespaceResolver;
 use Blugen\Service\Lexicon\V1\Resolver\NsidResolver;
+use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\Schema\Container\ObjectSchema;
 use Blugen\Service\Lexicon\V1\Schema\Meta\RefSchema;
 use Blugen\Service\Lexicon\V1\Schema\Meta\UnionSchema;
@@ -80,7 +83,23 @@ class ProcedureGenerator implements GeneratorInterface
             $schemaClass = $schemaPhpNamespace->addClass($schemaClassName);
             $schemaClass->addImplement(InputInterface::class);
 
-            foreach($schema->properties() as $property) {
+            try {
+                $properties = $schema->properties();
+            } catch (MissingRequiredFieldException) {
+                $properties = [];
+            }
+
+            $nullable = $schema->nullable() ?? [];
+            $required = $schema->required() ?? [];
+
+            foreach($properties as $propertyName => $property) {
+                $property = new Property(
+                    $propertyName,
+                    new Schema($property->toArray()),
+                    in_array($property, $nullable, true),
+                    in_array($property, $required, true)
+                );
+
                 ComponentGeneratorFactory::create($schemaClass, $property, $this->definition->lexicon())->generate();
             }
 
