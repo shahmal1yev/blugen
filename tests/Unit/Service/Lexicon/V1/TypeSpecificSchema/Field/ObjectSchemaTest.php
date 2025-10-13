@@ -4,7 +4,7 @@ namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\Schema\Field\ObjectSchema;
+use Blugen\Service\Lexicon\V1\Schema\Container\ObjectSchema;
 use PHPUnit\Framework\TestCase;
 
 class ObjectSchemaTest extends TestCase

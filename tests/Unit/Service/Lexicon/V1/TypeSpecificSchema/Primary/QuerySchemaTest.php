@@ -3,7 +3,7 @@
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Primary;
 
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\Schema\Field\ParamsSchema;
+use Blugen\Service\Lexicon\V1\Schema\Container\ParamsSchema;
 use Blugen\Service\Lexicon\V1\Schema\Primary\QuerySchema;
 use Blugen\Service\Lexicon\V1\Schema\Support\ErrorsSchema;
 use Blugen\Service\Lexicon\V1\Schema\Support\OutputSchema;

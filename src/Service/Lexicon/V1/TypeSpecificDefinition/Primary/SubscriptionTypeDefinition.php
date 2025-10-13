@@ -5,7 +5,7 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary;
 use Blugen\Service\Lexicon\DefinitionInterface;
 use Blugen\Service\Lexicon\LexiconInterface;
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\Schema\Field\ParamsSchema;
+use Blugen\Service\Lexicon\V1\Schema\Container\ParamsSchema;
 use Blugen\Service\Lexicon\V1\Schema\Support\ErrorsSchema;
 use Blugen\Service\Lexicon\V1\Schema\Support\MessageSchema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;

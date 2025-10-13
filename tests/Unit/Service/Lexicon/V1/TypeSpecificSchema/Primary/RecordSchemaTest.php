@@ -3,7 +3,7 @@
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Primary;
 
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\Schema\Field\ObjectSchema;
+use Blugen\Service\Lexicon\V1\Schema\Container\ObjectSchema;
 use Blugen\Service\Lexicon\V1\Schema\Primary\RecordSchema;
 use Blugen\Tests\TestCase;
 use Blugen\Tests\Unit\Traits\WithArrayableTestTrait;

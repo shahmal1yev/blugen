@@ -9,7 +9,7 @@ use Blugen\Service\Lexicon\ProcedureInterface;
 use Blugen\Service\Lexicon\V1\Factory\ComponentGeneratorFactory;
 use Blugen\Service\Lexicon\V1\Resolver\NamespaceResolver;
 use Blugen\Service\Lexicon\V1\Resolver\NsidResolver;
-use Blugen\Service\Lexicon\V1\Schema\Field\ObjectSchema;
+use Blugen\Service\Lexicon\V1\Schema\Container\ObjectSchema;
 use Blugen\Service\Lexicon\V1\Schema\Field\RefSchema;
 use Blugen\Service\Lexicon\V1\Schema\Field\UnionSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary\ProcedureTypeDefinition;

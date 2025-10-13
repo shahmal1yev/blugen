@@ -1,6 +1,6 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\Schema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Container;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Property;
@@ -8,14 +8,12 @@ use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
-class ParamsSchema implements SchemaInterface
+class ObjectSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
 
-    public function __construct(
-        private readonly SchemaInterface $schema,
-    )
+    public function __construct(private readonly SchemaInterface $schema)
     {
     }
 
@@ -26,7 +24,7 @@ class ParamsSchema implements SchemaInterface
 
     public function description(): ?string
     {
-        return $this->schema->description();
+        return $this->schema->description() ?? null;
     }
 
     public function __get(string $name): mixed
@@ -34,27 +32,27 @@ class ParamsSchema implements SchemaInterface
         return $this->schema->__get($name);
     }
 
-    /**
-     * @return string[]|null
-     */
+    public function properties(): array
+    {
+        $nullable = $this->nullable() ?? [];
+        $required = $this->required() ?? [];
+        $properties = $this->__get('properties') ?? [];
+
+        return array_map(fn (string $name, array $rawSchema) => new Property(
+            $name,
+            new Schema($rawSchema),
+            in_array($name, $nullable, true),
+            in_array($name, $required, true),
+        ), array_keys($properties), $properties);
+    }
+
     public function required(): ?array
     {
         return $this->__get('required');
     }
 
-    /**
-     * @return Property[]
-     */
-    public function properties(): array
+    public function nullable(): ?array
     {
-        $required = $this->required() ?? [];
-        $properties = $this->__get('properties');
-
-        return array_map(fn (string $name, array $rawSchema) => new Property(
-            $name,
-            new Schema($rawSchema),
-            ! in_array($name, $required, true),
-            in_array($name, $required, true),
-        ), array_keys($properties), $properties);
+        return $this->__get('nullable');
     }
 }
