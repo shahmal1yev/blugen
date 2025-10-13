@@ -1,24 +1,23 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\Schema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Meta;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
-class RefSchema implements SchemaInterface
+class TokenSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
 
     public function __construct(
-        private readonly SchemaInterface $schema,
-    )
-    {}
+        private readonly SchemaInterface $schema
+    ) {}
 
     public function type(): string
     {
-        return $this->schema->type();
+        return 'token';
     }
 
     public function description(): ?string
@@ -29,10 +28,5 @@ class RefSchema implements SchemaInterface
     public function __get(string $name): mixed
     {
         return $this->schema->__get($name);
-    }
-
-    public function ref(): string
-    {
-        return $this->__get('ref');
     }
 }

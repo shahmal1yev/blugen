@@ -9,7 +9,7 @@ use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Resolver\NamespaceResolver;
 use Blugen\Service\Lexicon\V1\Resolver\NsidResolver;
-use Blugen\Service\Lexicon\V1\Schema\Field\UnionSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\UnionSchema;
 use Nette\PhpGenerator\ClassType;
 
 class UnionComponentGenerator implements GeneratorInterface, ArraySerializationContributor

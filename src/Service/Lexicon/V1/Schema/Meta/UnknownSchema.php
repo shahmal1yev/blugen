@@ -1,23 +1,24 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\Schema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Meta;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
-class TokenSchema implements SchemaInterface
+class UnknownSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
 
-    public function __construct(
-        private readonly SchemaInterface $schema
-    ) {}
+    public function __construct(private readonly SchemaInterface $schema)
+    {
+
+    }
 
     public function type(): string
     {
-        return 'token';
+        return $this->schema->type();
     }
 
     public function description(): ?string

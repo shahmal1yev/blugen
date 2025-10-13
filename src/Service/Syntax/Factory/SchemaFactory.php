@@ -13,10 +13,10 @@ use Blugen\Service\Lexicon\V1\Schema\Concrete\NullSchema;
 use Blugen\Service\Lexicon\V1\Schema\Concrete\StringSchema;
 use Blugen\Service\Lexicon\V1\Schema\Container\ArraySchema;
 use Blugen\Service\Lexicon\V1\Schema\Container\ObjectSchema;
-use Blugen\Service\Lexicon\V1\Schema\Field\RefSchema;
-use Blugen\Service\Lexicon\V1\Schema\Field\TokenSchema;
-use Blugen\Service\Lexicon\V1\Schema\Field\UnionSchema;
-use Blugen\Service\Lexicon\V1\Schema\Field\UnknownSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\RefSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\TokenSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\UnionSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\UnknownSchema;
 
 class SchemaFactory
 {
