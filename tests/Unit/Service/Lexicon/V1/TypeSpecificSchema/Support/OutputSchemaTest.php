@@ -68,15 +68,14 @@ class OutputSchemaTest extends TestCase
         $this->assertSame($schema, $outputSchema->schema());
     }
 
-    public function test_schema_is_required(): void
+    public function test_schema_is_optional(): void
     {
         $schema = $this->schema([
+            'type' => 'output',
             // missing schema
         ]);
 
-        $this->expectException(TypeError::class);
-
-        $schema->schema();
+        $this->assertNull($schema->schema());
     }
 
     public function test_parameters_returns_expected_value(): void

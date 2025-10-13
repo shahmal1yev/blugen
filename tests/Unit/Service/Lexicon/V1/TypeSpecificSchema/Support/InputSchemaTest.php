@@ -68,15 +68,14 @@ class InputSchemaTest extends TestCase
         $this->assertSame($schema, $inputSchema->schema());
     }
 
-    public function test_schema_is_required(): void
+    public function test_schema_is_optional(): void
     {
         $schema = $this->schema([
+            'type' => 'input',
             // missing schema
         ]);
 
-        $this->expectException(TypeError::class);
-
-        $schema->schema();
+        $this->assertNull($schema->schema());
     }
 
     public function test_parameters_returns_expected_value(): void
