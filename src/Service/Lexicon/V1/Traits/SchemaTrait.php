@@ -2,7 +2,7 @@
 
 namespace Blugen\Service\Lexicon\V1\Traits;
 
-trait DefaultSchemaTrait
+trait SchemaTrait
 {
     public function type(): string
     {

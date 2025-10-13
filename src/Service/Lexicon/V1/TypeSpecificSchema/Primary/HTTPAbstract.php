@@ -5,7 +5,7 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Primary;
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\Traits\DefaultSchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ParamsSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\ErrorsSchema;
@@ -14,7 +14,7 @@ abstract class HTTPAbstract
 {
     use RawSchemaAccessorTrait;
     use ArrayableTrait;
-    use DefaultSchemaTrait;
+    use SchemaTrait;
 
     public function __construct(
         private readonly SchemaInterface $schema,
