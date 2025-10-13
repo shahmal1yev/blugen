@@ -6,7 +6,7 @@ use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait as SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
 class ParamsSchema implements SchemaInterface
 {

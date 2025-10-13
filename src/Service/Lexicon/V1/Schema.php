@@ -4,7 +4,7 @@ namespace Blugen\Service\Lexicon\V1;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait as SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
 class Schema implements SchemaInterface
 {
