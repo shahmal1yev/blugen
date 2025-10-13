@@ -5,17 +5,17 @@ namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Support;
 use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\ErrorSchema;
 use Blugen\Tests\TestCase;
-use Blugen\Tests\Unit\Traits\WithArrayableTest;
-use Blugen\Tests\Unit\Traits\WithGetTest;
+use Blugen\Tests\Unit\Traits\WithArrayableTestTrait;
+use Blugen\Tests\Unit\Traits\WithGetTestTrait;
 use Blugen\Tests\Unit\Traits\WithSchema;
-use Blugen\Tests\Unit\Traits\WithSupportSchemaTest;
+use Blugen\Tests\Unit\Traits\WithSupportSchemaTestTrait;
 
 class ErrorSchemaTest extends TestCase
 {
     use WithSchema;
-    use WithGetTest;
-    use WithArrayableTest;
-    use WithSupportSchemaTest;
+    use WithGetTestTrait;
+    use WithArrayableTestTrait;
+    use WithSupportSchemaTestTrait;
 
     public function test_name_is_required(): void
     {

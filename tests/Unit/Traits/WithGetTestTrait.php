@@ -4,7 +4,7 @@ namespace Blugen\Tests\Unit\Traits;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 
-trait WithGetTest
+trait WithGetTestTrait
 {
     #[DataProvider('magicGetCaseProvider')]
     public function test_magic_get_works_as_expected(array $arr, string $param, mixed $expected): void

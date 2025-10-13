@@ -52,6 +52,10 @@ class ErrorsSchema implements SchemaInterface, \IteratorAggregate, \Countable, \
 
     public function offsetGet(mixed $offset): ErrorSchema
     {
+        if (!array_key_exists($offset, $this->errors)) {
+            throw new \OutOfBoundsException("Error schema offset '{$offset}' not found");
+        }
+
         return $this->errors[$offset];
     }
 

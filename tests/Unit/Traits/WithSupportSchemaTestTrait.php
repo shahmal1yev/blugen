@@ -2,7 +2,7 @@
 
 namespace Blugen\Tests\Unit\Traits;
 
-trait WithSupportSchemaTest
+trait WithSupportSchemaTestTrait
 {
     public function test_type_throws_exception(): void
     {

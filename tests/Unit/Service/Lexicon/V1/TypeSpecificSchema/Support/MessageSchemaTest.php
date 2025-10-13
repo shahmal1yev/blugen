@@ -6,17 +6,17 @@ use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\MessageSchema;
 use Blugen\Tests\TestCase;
-use Blugen\Tests\Unit\Traits\WithGetTest;
+use Blugen\Tests\Unit\Traits\WithGetTestTrait;
 use Blugen\Tests\Unit\Traits\WithSchema;
-use Blugen\Tests\Unit\Traits\WithSupportSchemaTest;
+use Blugen\Tests\Unit\Traits\WithSupportSchemaTestTrait;
 use TypeError;
 
 class MessageSchemaTest extends TestCase
 {
     use WithSchema;
-    use WithGetTest;
+    use WithGetTestTrait;
     use ArrayableTrait;
-    use WithSupportSchemaTest;
+    use WithSupportSchemaTestTrait;
 
     public function test_schema_returns_expected_value(): void
     {

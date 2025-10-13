@@ -7,19 +7,19 @@ use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\ErrorSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\ErrorsSchema;
 use Blugen\Tests\TestCase;
-use Blugen\Tests\Unit\Traits\WithArrayableTest;
-use Blugen\Tests\Unit\Traits\WithGetTest;
+use Blugen\Tests\Unit\Traits\WithArrayableTestTrait;
+use Blugen\Tests\Unit\Traits\WithGetTestTrait;
 use Blugen\Tests\Unit\Traits\WithSchema;
-use Blugen\Tests\Unit\Traits\WithSupportSchemaTest;
+use Blugen\Tests\Unit\Traits\WithSupportSchemaTestTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TypeError;
 
 class ErrorsSchemaTest extends TestCase
 {
     use WithSchema;
-    use WithGetTest;
-    use WithArrayableTest;
-    use WithSupportSchemaTest;
+    use WithGetTestTrait;
+    use WithArrayableTestTrait;
+    use WithSupportSchemaTestTrait;
 
     private function schema(array $content): ErrorsSchema
     {
@@ -73,11 +73,12 @@ class ErrorsSchemaTest extends TestCase
         $this->assertInstanceOf(ErrorSchema::class, $schema->offsetGet(0));
     }
 
-    public function test_offsetGet_throws_TypeError_when_index_does_not_exist(): void
+    public function test_offsetGet_throws_OutOfBoundsException_when_index_not_found(): void
     {
         $schema = $this->schema([]);
 
-        $this->expectException(TypeError::class);
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessage("Error schema offset 'foo' not found");
 
         $schema->offsetGet('foo');
     }

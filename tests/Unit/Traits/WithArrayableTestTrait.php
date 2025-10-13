@@ -2,7 +2,7 @@
 
 namespace Blugen\Tests\Unit\Traits;
 
-trait WithArrayableTest
+trait WithArrayableTestTrait
 {
     public function test_toArray_works_expected(): void
     {

@@ -5,7 +5,7 @@ namespace Blugen\Tests\Unit\Traits;
 use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
 use TypeError;
 
-trait WithSchemaTest
+trait WithSchemaTestTrait
 {
     public function test_type_is_required(): void
     {
