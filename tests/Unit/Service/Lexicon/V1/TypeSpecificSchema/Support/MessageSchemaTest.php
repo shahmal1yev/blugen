@@ -54,7 +54,7 @@ class MessageSchemaTest extends TestCase
         $this->assertSame($schema, $messageSchema->toArray());
     }
 
-    private function schema(array $content): MessageSchema
+    private function schema(array $content = []): MessageSchema
     {
         return new MessageSchema(new Schema($content));
     }
