@@ -3,7 +3,7 @@
 namespace Blugen\Service\Syntax\Constraints\BooleanType;
 
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\BooleanSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\BooleanSchema;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;

@@ -2,18 +2,18 @@
 
 namespace Blugen\Tests\Unit\Service\Syntax\Factory;
 
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ArraySchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\BlobSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\BooleanSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\BytesSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\CidLinkSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\IntegerSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\NullSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ObjectSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\StringSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\TokenSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\UnionSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\UnknownSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\ArraySchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\BlobSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\BooleanSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\BytesSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\CidLinkSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\IntegerSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\NullSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\ObjectSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\StringSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\TokenSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\UnionSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\UnknownSchema;
 use Blugen\Service\Syntax\Factory\SchemaFactory;
 use Blugen\Tests\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;

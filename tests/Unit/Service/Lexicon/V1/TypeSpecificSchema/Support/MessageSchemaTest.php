@@ -3,8 +3,8 @@
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Support;
 
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Schema\Support\MessageSchema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\MessageSchema;
 use Blugen\Tests\TestCase;
 use Blugen\Tests\Unit\Traits\WithGetTestTrait;
 use Blugen\Tests\Unit\Traits\WithSchema;

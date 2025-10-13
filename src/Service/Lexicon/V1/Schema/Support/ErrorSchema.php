@@ -1,29 +1,31 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Support;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
+use Blugen\Service\Lexicon\V1\Traits\SupportSchemaTrait;
 
-class UnknownSchema implements SchemaInterface
+class ErrorSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
+    use SupportSchemaTrait;
 
     public function __construct(private readonly SchemaInterface $schema)
     {
 
     }
 
-    public function type(): string
+    public function name(): string
     {
-        return $this->schema->type();
+        return $this->__get('name');
     }
 
     public function description(): ?string
     {
-        return $this->schema->description();
+        return $this->__get('description');
     }
 
     public function __get(string $name): mixed

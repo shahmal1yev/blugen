@@ -4,7 +4,7 @@ namespace Blugen\Service\Syntax\Constraints\ArrayType;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ArraySchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\ArraySchema;
 use Blugen\Service\Syntax\Constraints\LexConstraint;
 use Blugen\Service\Syntax\Factory\ConstraintFactory;
 use Blugen\Service\Syntax\Factory\SchemaFactory;

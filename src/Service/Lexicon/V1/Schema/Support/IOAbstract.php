@@ -1,14 +1,13 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support;
+namespace Blugen\Service\Lexicon\V1\Schema\Support;
 
-use Blugen\Enum\SupportTypeEnum;
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use Blugen\Service\Lexicon\V1\Traits\SupportSchemaTrait;
 
-class MessageSchema implements SchemaInterface
+abstract class IOAbstract
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
@@ -23,10 +22,24 @@ class MessageSchema implements SchemaInterface
         return $this->schema->__get($name);
     }
 
+    public function description(): ?string
+    {
+        return $this->__get('description');
+    }
+
+    public function encoding(): string
+    {
+        return $this->__get('encoding');
+    }
+
     public function schema(): array
     {
-        /** @var array $schema */
         return $this->__get('schema');
+    }
+
+    public function parameters(): ?array
+    {
+        return $this->__get('parameters');
     }
 
     public function toArray(): array

@@ -7,7 +7,7 @@ use Blugen\Service\Lexicon\ArraySerialization\ArraySerializationContext;
 use Blugen\Service\Lexicon\ArraySerialization\ArraySerializationContributor;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Property;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\IntegerSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\IntegerSchema;
 use Nette\PhpGenerator\ClassType;
 
 class IntegerComponentGenerator implements GeneratorInterface, ArraySerializationContributor

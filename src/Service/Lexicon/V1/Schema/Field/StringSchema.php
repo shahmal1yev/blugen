@@ -1,12 +1,12 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
-class IntegerSchema implements SchemaInterface
+class StringSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
@@ -29,14 +29,34 @@ class IntegerSchema implements SchemaInterface
         return $this->schema->description() ?? null;
     }
 
-    public function minimum(): ?int
+    public function format(): ?string
     {
-        return $this->__get('minimum');
+        return $this->__get('format') ?? null;
     }
 
-    public function maximum(): ?int
+    public function maxLength(): ?int
     {
-        return $this->__get('maximum');
+        return $this->__get('maxLength');
+    }
+
+    public function minLength(): ?int
+    {
+        return $this->__get('minLength');
+    }
+
+    public function maxGraphemes(): ?int
+    {
+        return $this->__get('maxGraphemes');
+    }
+
+    public function minGraphemes(): ?int
+    {
+        return $this->__get('minGraphemes');
+    }
+
+    public function knownValues(): ?array
+    {
+        return $this->__get('knownValues');
     }
 
     public function enum(): ?array
@@ -44,12 +64,12 @@ class IntegerSchema implements SchemaInterface
         return $this->__get('enum');
     }
 
-    public function default(): ?int
+    public function default(): ?string
     {
         return $this->__get('default');
     }
 
-    public function const(): ?int
+    public function const(): ?string
     {
         return $this->__get('const');
     }

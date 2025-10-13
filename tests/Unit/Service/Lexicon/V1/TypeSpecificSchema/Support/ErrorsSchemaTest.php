@@ -4,15 +4,14 @@ namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Support;
 
 use ArrayIterator;
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\ErrorSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\ErrorsSchema;
+use Blugen\Service\Lexicon\V1\Schema\Support\ErrorSchema;
+use Blugen\Service\Lexicon\V1\Schema\Support\ErrorsSchema;
 use Blugen\Tests\TestCase;
 use Blugen\Tests\Unit\Traits\WithArrayableTestTrait;
 use Blugen\Tests\Unit\Traits\WithGetTestTrait;
 use Blugen\Tests\Unit\Traits\WithSchema;
 use Blugen\Tests\Unit\Traits\WithSupportSchemaTestTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
-use TypeError;
 
 class ErrorsSchemaTest extends TestCase
 {

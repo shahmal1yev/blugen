@@ -5,10 +5,10 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Primary;
 use Blugen\Service\Lexicon\DefinitionInterface;
 use Blugen\Service\Lexicon\LexiconInterface;
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Schema\Field\ParamsSchema;
+use Blugen\Service\Lexicon\V1\Schema\Support\ErrorsSchema;
+use Blugen\Service\Lexicon\V1\Schema\Support\OutputSchema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ParamsSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\ErrorsSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\OutputSchema;
 use Blugen\Service\Lexicon\V1\Traits\DefinitionTrait;
 
 class QueryTypeDefinition implements DefinitionInterface

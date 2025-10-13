@@ -1,13 +1,13 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support;
+namespace Blugen\Service\Lexicon\V1\Schema\Support;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use Blugen\Service\Lexicon\V1\Traits\SupportSchemaTrait;
 
-class ErrorSchema implements SchemaInterface
+class MessageSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
@@ -15,21 +15,21 @@ class ErrorSchema implements SchemaInterface
 
     public function __construct(private readonly SchemaInterface $schema)
     {
-
-    }
-
-    public function name(): string
-    {
-        return $this->__get('name');
-    }
-
-    public function description(): ?string
-    {
-        return $this->__get('description');
     }
 
     public function __get(string $name): mixed
     {
         return $this->schema->__get($name);
+    }
+
+    public function schema(): array
+    {
+        /** @var array $schema */
+        return $this->__get('schema');
+    }
+
+    public function toArray(): array
+    {
+        return $this->schema->toArray();
     }
 }

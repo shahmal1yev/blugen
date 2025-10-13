@@ -1,10 +1,10 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Primary;
+namespace Blugen\Service\Lexicon\V1\Schema\Primary;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\OutputSchema;
+use Blugen\Service\Lexicon\V1\Schema\Support\OutputSchema;
 
 class QuerySchema extends HTTPAbstract implements SchemaInterface
 {

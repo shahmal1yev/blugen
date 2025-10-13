@@ -1,6 +1,6 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support;
+namespace Blugen\Service\Lexicon\V1\Schema\Support;
 
 use ArrayIterator;
 use BadMethodCallException;

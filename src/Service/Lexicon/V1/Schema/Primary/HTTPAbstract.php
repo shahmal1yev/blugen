@@ -1,14 +1,14 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Primary;
+namespace Blugen\Service\Lexicon\V1\Schema\Primary;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Schema\Field\ParamsSchema;
+use Blugen\Service\Lexicon\V1\Schema\Support\ErrorsSchema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ParamsSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\ErrorsSchema;
+use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
 
 abstract class HTTPAbstract
 {

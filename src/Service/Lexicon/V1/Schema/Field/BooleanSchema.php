@@ -1,12 +1,12 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
-class UnionSchema implements SchemaInterface
+class BooleanSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
@@ -29,16 +29,13 @@ class UnionSchema implements SchemaInterface
         return $this->schema->description() ?? null;
     }
 
-    /**
-     * @return string[]
-     */
-    public function refs(): array
+    public function default(): ?bool
     {
-        return $this->__get('refs') ?? [];
+        return $this->__get('default');
     }
 
-    public function closed(): bool
+    public function const(): ?bool
     {
-        return (bool) ($this->__get('closed') ?? false);
+        return $this->__get('const');
     }
 }

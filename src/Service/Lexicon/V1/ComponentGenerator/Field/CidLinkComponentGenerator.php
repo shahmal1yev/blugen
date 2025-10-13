@@ -7,7 +7,6 @@ use Blugen\Service\Lexicon\ArraySerialization\ArraySerializationContext;
 use Blugen\Service\Lexicon\ArraySerialization\ArraySerializationContributor;
 use Blugen\Service\Lexicon\GeneratorInterface;
 use Blugen\Service\Lexicon\V1\Property;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\CidLinkSchema;
 use Nette\PhpGenerator\ClassType;
 
 class CidLinkComponentGenerator implements GeneratorInterface, ArraySerializationContributor

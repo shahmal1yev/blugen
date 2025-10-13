@@ -3,11 +3,11 @@
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Primary;
 
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ParamsSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Primary\ProcedureSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\ErrorsSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\InputSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support\OutputSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\ParamsSchema;
+use Blugen\Service\Lexicon\V1\Schema\Primary\ProcedureSchema;
+use Blugen\Service\Lexicon\V1\Schema\Support\ErrorsSchema;
+use Blugen\Service\Lexicon\V1\Schema\Support\InputSchema;
+use Blugen\Service\Lexicon\V1\Schema\Support\OutputSchema;
 use Blugen\Tests\TestCase;
 use Blugen\Tests\Unit\Traits\WithArrayableTestTrait;
 use Blugen\Tests\Unit\Traits\WithGetTestTrait;

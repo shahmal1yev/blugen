@@ -1,25 +1,23 @@
 <?php
 
-namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
+namespace Blugen\Service\Lexicon\V1\Schema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
-class BytesSchema implements SchemaInterface
+class TokenSchema implements SchemaInterface
 {
     use ArrayableTrait;
     use RawSchemaAccessorTrait;
 
     public function __construct(
-        private readonly SchemaInterface $schema,
-    )
-    {
-    }
+        private readonly SchemaInterface $schema
+    ) {}
 
     public function type(): string
     {
-        return $this->schema->type();
+        return 'token';
     }
 
     public function description(): ?string
@@ -30,15 +28,5 @@ class BytesSchema implements SchemaInterface
     public function __get(string $name): mixed
     {
         return $this->schema->__get($name);
-    }
-
-    public function minLength(): ?int
-    {
-        return $this->__get('minLength');
-    }
-
-    public function maxLength(): ?int
-    {
-        return $this->__get('maxLength');
     }
 }

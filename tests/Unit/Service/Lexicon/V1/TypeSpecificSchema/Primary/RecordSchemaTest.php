@@ -2,10 +2,9 @@
 
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Primary;
 
-use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ObjectSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Primary\RecordSchema;
+use Blugen\Service\Lexicon\V1\Schema\Field\ObjectSchema;
+use Blugen\Service\Lexicon\V1\Schema\Primary\RecordSchema;
 use Blugen\Tests\TestCase;
 use Blugen\Tests\Unit\Traits\WithArrayableTestTrait;
 use Blugen\Tests\Unit\Traits\WithGetTestTrait;
