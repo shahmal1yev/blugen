@@ -4,19 +4,19 @@ namespace Blugen\Service\Syntax\Factory;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ArraySchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\BlobSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\BooleanSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\BytesSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\CidLinkSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\IntegerSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\NullSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ObjectSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\RefSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\StringSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\TokenSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\UnionSchema;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\UnknownSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\BlobSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\BooleanSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\BytesSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\CidLinkSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\IntegerSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\NullSchema;
+use Blugen\Service\Lexicon\V1\Schema\Concrete\StringSchema;
+use Blugen\Service\Lexicon\V1\Schema\Container\ArraySchema;
+use Blugen\Service\Lexicon\V1\Schema\Container\ObjectSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\RefSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\TokenSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\UnionSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\UnknownSchema;
 
 class SchemaFactory
 {

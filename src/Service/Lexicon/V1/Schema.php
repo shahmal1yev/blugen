@@ -3,9 +3,14 @@
 namespace Blugen\Service\Lexicon\V1;
 
 use Blugen\Service\Lexicon\SchemaInterface;
+use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
 class Schema implements SchemaInterface
 {
+    use ArrayableTrait;
+    use RawSchemaAccessorTrait;
+
     public function __construct(private readonly array $schema)
     {
     }

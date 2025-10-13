@@ -10,7 +10,7 @@ use Blugen\Service\Lexicon\LexiconInterface;
 use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Resolver\NamespaceResolver;
 use Blugen\Service\Lexicon\V1\Resolver\NsidResolver;
-use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\RefSchema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\RefSchema;
 use Nette\PhpGenerator\ClassType;
 
 class RefComponentGenerator implements GeneratorInterface, ArraySerializationContributor

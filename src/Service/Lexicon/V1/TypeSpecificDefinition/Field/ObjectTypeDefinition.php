@@ -4,9 +4,14 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificDefinition\Field;
 
 use Blugen\Service\Lexicon\DefinitionInterface;
 use Blugen\Service\Lexicon\LexiconInterface;
+use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
+use Blugen\Service\Lexicon\V1\Traits\DefinitionTrait;
 
 class ObjectTypeDefinition implements DefinitionInterface
 {
+    use ArrayableTrait;
+    use DefinitionTrait;
+
     public function __construct(private readonly DefinitionInterface $definition)
     {
     }
