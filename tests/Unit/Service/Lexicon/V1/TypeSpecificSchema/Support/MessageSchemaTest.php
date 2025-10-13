@@ -3,6 +3,7 @@
 namespace Blugen\Tests\Unit\Service\Lexicon\V1\TypeSpecificSchema\Support;
 
 use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\UnionSchema;
 use Blugen\Service\Lexicon\V1\Schema\Support\MessageSchema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Tests\TestCase;
@@ -23,7 +24,8 @@ class MessageSchemaTest extends TestCase
         $schema = ['foo' => 'bar', 'baz' => 'qux'];
         $messageSchema = $this->schema(['schema' => $schema]);
 
-        $this->assertSame($schema, $messageSchema->schema());
+        $this->assertInstanceOf(UnionSchema::class, $unionSchema = $messageSchema->schema());
+        $this->assertSame($schema, $unionSchema->toArray());
     }
 
     public function test_schema_is_required(): void

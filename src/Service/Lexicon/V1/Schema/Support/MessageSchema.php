@@ -3,6 +3,8 @@
 namespace Blugen\Service\Lexicon\V1\Schema\Support;
 
 use Blugen\Service\Lexicon\SchemaInterface;
+use Blugen\Service\Lexicon\V1\Schema;
+use Blugen\Service\Lexicon\V1\Schema\Meta\UnionSchema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use Blugen\Service\Lexicon\V1\Traits\SupportSchemaTrait;
@@ -22,10 +24,9 @@ class MessageSchema implements SchemaInterface
         return $this->schema->__get($name);
     }
 
-    public function schema(): array
+    public function schema(): UnionSchema
     {
-        /** @var array $schema */
-        return $this->__get('schema');
+        return new UnionSchema(new Schema($this->__get('schema')));
     }
 
     public function toArray(): array
