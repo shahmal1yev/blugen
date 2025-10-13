@@ -4,7 +4,7 @@ namespace Blugen\Tests\Unit\Service\Lexicon\V1\Traits;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
-use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use PHPUnit\Framework\TestCase;
 
 class SchemaTraitTest extends TestCase
@@ -14,7 +14,7 @@ class SchemaTraitTest extends TestCase
         $data = ['type' => 'object', 'description' => 'demo'];
 
         $obj = new class($data) {
-            use SchemaTrait;
+            use RawSchemaAccessorTrait;
 
             public function __construct(private array $schema)
             {
@@ -29,7 +29,7 @@ class SchemaTraitTest extends TestCase
         $data = ['type' => 'object', 'description' => 'from-interface'];
 
         $obj = new class(new Schema($data)) {
-            use SchemaTrait;
+            use RawSchemaAccessorTrait;
 
             public function __construct(private SchemaInterface $schema)
             {
@@ -42,7 +42,7 @@ class SchemaTraitTest extends TestCase
     public function test_schema_throws_when_property_missing(): void
     {
         $obj = new class {
-            use SchemaTrait;
+            use RawSchemaAccessorTrait;
         };
 
         $this->expectException(\LogicException::class);
@@ -54,7 +54,7 @@ class SchemaTraitTest extends TestCase
     public function test_schema_throws_when_property_invalid_type(): void
     {
         $obj = new class('not-an-array-or-interface') {
-            use SchemaTrait;
+            use RawSchemaAccessorTrait;
 
             public function __construct(private string $schema)
             {

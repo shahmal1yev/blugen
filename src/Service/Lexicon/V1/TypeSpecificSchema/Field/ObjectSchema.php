@@ -6,12 +6,12 @@ use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Property;
 use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\Traits\SchemaTrait as SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait as SchemaTrait;
 
 class ObjectSchema implements SchemaInterface
 {
     use ArrayableTrait;
-    use SchemaTrait;
+    use RawSchemaAccessorTrait;
 
     public function __construct(private readonly SchemaInterface $schema)
     {

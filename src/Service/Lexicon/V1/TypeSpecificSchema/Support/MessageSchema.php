@@ -5,13 +5,13 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Support;
 use Blugen\Enum\SupportTypeEnum;
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use Blugen\Service\Lexicon\V1\Traits\SupportSchemaTrait;
 
 class MessageSchema implements SchemaInterface
 {
     use ArrayableTrait;
-    use SchemaTrait;
+    use RawSchemaAccessorTrait;
     use SupportSchemaTrait;
 
     public function __construct(private readonly SchemaInterface $schema)

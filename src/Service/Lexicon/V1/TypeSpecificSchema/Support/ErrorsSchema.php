@@ -7,13 +7,13 @@ use BadMethodCallException;
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use Blugen\Service\Lexicon\V1\Traits\SupportSchemaTrait;
 
 class ErrorsSchema implements SchemaInterface, \IteratorAggregate, \Countable, \ArrayAccess
 {
     use ArrayableTrait;
-    use SchemaTrait;
+    use RawSchemaAccessorTrait;
     use SupportSchemaTrait;
 
     /** @var ErrorSchema[] */

@@ -2,7 +2,7 @@
 
 namespace Blugen\Tests\Unit\Traits;
 
-use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use TypeError;
 
 trait WithSchemaTestTrait

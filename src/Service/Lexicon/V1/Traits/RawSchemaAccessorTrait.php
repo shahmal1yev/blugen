@@ -4,7 +4,7 @@ namespace Blugen\Service\Lexicon\V1\Traits;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 
-trait SchemaTrait
+trait RawSchemaAccessorTrait
 {
     public function schema(): array
     {

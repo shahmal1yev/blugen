@@ -4,12 +4,12 @@ namespace Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field;
 
 use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
-use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 
 class StringSchema implements SchemaInterface
 {
     use ArrayableTrait;
-    use SchemaTrait;
+    use RawSchemaAccessorTrait;
 
     public function __construct(private readonly SchemaInterface $schema)
     {}

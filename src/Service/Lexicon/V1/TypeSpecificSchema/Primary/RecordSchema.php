@@ -6,13 +6,13 @@ use Blugen\Service\Lexicon\SchemaInterface;
 use Blugen\Service\Lexicon\V1\Schema;
 use Blugen\Service\Lexicon\V1\Traits\ArrayableTrait;
 use Blugen\Service\Lexicon\V1\Traits\DefaultSchemaTrait;
-use Blugen\Service\Lexicon\V1\Traits\SchemaTrait;
+use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\ObjectSchema;
 use Blugen\Service\Lexicon\V1\TypeSpecificSchema\Field\StringSchema;
 
 class RecordSchema implements SchemaInterface
 {
-    use SchemaTrait;
+    use RawSchemaAccessorTrait;
     use DefaultSchemaTrait;
     use ArrayableTrait;
 
