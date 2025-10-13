@@ -2,6 +2,7 @@
 
 namespace Blugen\Tests\Unit\Traits;
 
+use Blugen\Service\Lexicon\V1\Exceptions\MissingRequiredFieldException;
 use Blugen\Service\Lexicon\V1\Traits\RawSchemaAccessorTrait;
 use TypeError;
 
@@ -13,7 +14,7 @@ trait WithSchemaTestTrait
             // missing type
         ]);
 
-        $this->expectException(TypeError::class);
+        $this->expectException(MissingRequiredFieldException::class);
         $schema->type();
     }
 
